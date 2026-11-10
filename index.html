@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel Modular TO</title>
+<meta name="description" content="Guía del operador del Panel Modular de Terapia Ocupacional: instrucciones, seguridad y simuladores.">
+<meta name="theme-color" content="#1F7A6B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Panel TO">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+html{color-scheme:light;-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+.install{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+ background:var(--ink);color:var(--bg);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-size:.95rem}
+.install .btn{background:var(--accent);color:var(--accent-ink)}
+.install .x{background:transparent;border:0;color:var(--bg);font-size:1.3rem;padding:4px 8px}
+</style>
+</head>
+<body>
+<style>
+/* Layout: el panel físico como mapa de módulos arriba; la ficha del módulo elegido debajo; reglas generales y checklist al final */
+:root{
+  --bg:#F1F4EF; --surface:#FFFFFF; --ink:#1E3640; --muted:#56696F; --line:#D3DDD6;
+  --accent:#1F7A6B; --accent-ink:#FFFFFF; --accent-soft:#DCEEE9;
+  --ok:#2C8549; --ok-soft:#E2F2E6; --bad:#BF3E2C; --bad-soft:#FBE5DF; --warn:#A66A00; --warn-soft:#FFF1D6;
+  --scene:#E9EFEB; --outline:#2A3F45;
+  --skin:#F2C9A0; --skin2:#D9A57A; --hair:#4A3426; --cheek:#F29C8F; --sleeve:#4C8FC9; --sleeve2:#7E5BA8;
+  --m1:#E8735A; --m2:#F2B632; --m3:#3FA3A0; --m4:#8C7BD1; --m5:#5C9BD6;
+  --wood:#C99262; --metal:#B4BEC4; --fabric:#86ACCD; --fabric2:#E7D3B4; --dark:#33464D; --paper:#F8F8F3; --lace:#E0533F;
+  --f-display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121E1D; --surface:#1A2A29; --ink:#E4EDE9; --muted:#9FB3AE; --line:#2C3F3D;
+  --accent:#4FC1AB; --accent-ink:#0C1A17; --accent-soft:#1B3A34;
+  --ok:#62C98A; --ok-soft:#173426; --bad:#F08571; --bad-soft:#3B201B; --warn:#F2B84B; --warn-soft:#3A2D12;
+  --scene:#213230; --outline:#0E1A19;
+  --skin:#E8BD93; --skin2:#C38E64; --hair:#2B1E16; --cheek:#E08679; --sleeve:#5C9BD6; --sleeve2:#9A80CC;
+  --wood:#B8845B; --metal:#97A3AA; --fabric:#7199BC; --fabric2:#CDB996; --dark:#0F1A1C; --paper:#DDDDD3; --lace:#E86A55;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121E1D; --surface:#1A2A29; --ink:#E4EDE9; --muted:#9FB3AE; --line:#2C3F3D;
+  --accent:#4FC1AB; --accent-ink:#0C1A17; --accent-soft:#1B3A34;
+  --ok:#62C98A; --ok-soft:#173426; --bad:#F08571; --bad-soft:#3B201B; --warn:#F2B84B; --warn-soft:#3A2D12;
+  --scene:#213230; --outline:#0E1A19;
+  --skin:#E8BD93; --skin2:#C38E64; --hair:#2B1E16; --cheek:#E08679; --sleeve:#5C9BD6; --sleeve2:#9A80CC;
+  --wood:#B8845B; --metal:#97A3AA; --fabric:#7199BC; --fabric2:#CDB996; --dark:#0F1A1C; --paper:#DDDDD3; --lace:#E86A55;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700}
+h2{font-size:clamp(1.5rem,3.2vw,2rem)}
+h3{font-size:1.25rem}
+p{margin:0}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+/* Encabezado */
+.top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:end}
+.top .intro{display:flex;flex-direction:column;gap:12px;max-width:60ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:700;background:var(--surface);border:1px solid var(--line)}
+.pill.ok{color:var(--ok);background:var(--ok-soft);border-color:transparent}
+.pill.bad{color:var(--bad);background:var(--bad-soft);border-color:transparent}
+.session{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.session .bar{height:10px;border-radius:99px;background:var(--scene);overflow:hidden}
+.session .bar span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.session .row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:9px 14px;font-weight:700;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:6px 10px;font-size:.88rem}
+
+/* Mapa del panel */
+.board{background:var(--wood);border-radius:20px;padding:14px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.12)}
+.board-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-flow:dense;gap:10px}
+.tile{position:relative;border:0;border-radius:12px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:var(--paper);color:#1E3640;text-align:center;box-shadow:0 3px 0 rgba(0,0,0,.18);transition:transform .12s}
+.tile:hover{transform:translateY(-2px)}
+.tile[aria-current="true"]{box-shadow:0 0 0 3px var(--ink),0 3px 0 rgba(0,0,0,.18)}
+.tile .num{position:absolute;top:6px;left:8px;font-family:var(--f-display);font-weight:700;font-size:.85rem;color:#56696F;font-variant-numeric:tabular-nums}
+.tile .done{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:#2C8549;color:#fff;font-size:12px;display:grid;place-items:center}
+.tile svg{width:100%;max-width:64px;height:auto}
+.tile .nm{font-family:var(--f-display);font-weight:600;font-size:.82rem;line-height:1.15}
+.tile.wide{grid-column:span 2}
+
+/* Ficha */
+.detail{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.d-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line)}
+.d-badge{width:84px;height:84px;border-radius:18px;display:grid;place-items:center;background:var(--paper)}
+.d-badge svg{width:64px;height:64px}
+.d-title{display:flex;flex-direction:column;gap:6px;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.8rem;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.d-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.d-body{padding:22px;display:flex;flex-direction:column;gap:30px}
+.cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}
+.block{display:flex;flex-direction:column;gap:12px;min-width:0}
+.quote{border-left:4px solid var(--line);padding:6px 0 6px 14px;font-style:italic;color:var(--muted)}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+ol.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font-family:var(--f-display);font-weight:700}
+ol.steps b{display:block}
+.sub{font-family:var(--f-display);font-weight:600;font-size:1rem;margin-top:6px;color:var(--accent)}
+.note{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;background:var(--warn-soft);border-radius:12px;padding:12px 14px}
+.note .i{width:28px;height:28px;border-radius:50%;background:var(--warn);color:var(--surface);display:grid;place-items:center;font-weight:700;font-family:var(--f-display)}
+
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.lane{display:flex;flex-direction:column;gap:12px;min-width:0}
+.lane h3{display:flex;align-items:center;gap:10px}
+.lane h3 .mk{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--surface);font-size:18px}
+.lane.ok h3 .mk{background:var(--ok)} .lane.bad h3 .mk{background:var(--bad)}
+.lane.ok h3{color:var(--ok)} .lane.bad h3{color:var(--bad)}
+.cards{display:grid;grid-template-columns:1fr;gap:12px}
+.card{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:center;border-radius:14px;padding:10px;border:2px solid transparent}
+.lane.ok .card{background:var(--ok-soft)} .lane.bad .card{background:var(--bad-soft)}
+.card svg{width:100%;height:auto;display:block;border-radius:10px}
+.card h4{font-size:1.02rem;margin-bottom:2px}
+.card p{font-size:.93rem;color:var(--ink)}
+
+/* Simuladores */
+.sim{background:var(--scene);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.sim-row{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.led-out{width:120px;height:120px;border-radius:50%;background:#222;border:6px solid var(--metal);transition:background .15s,box-shadow .15s}
+.led-btns{display:flex;gap:14px}
+.led-btn{width:64px;height:64px;border-radius:50%;border:5px solid var(--metal);box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .08s,box-shadow .08s}
+.led-btn[aria-pressed="true"]{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.led-name{font-family:var(--f-display);font-size:1.4rem;font-weight:600}
+.mix{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;font-size:.88rem}
+.mix div{display:flex;align-items:center;gap:8px;background:var(--surface);padding:6px 10px;border-radius:10px}
+.mix i{width:16px;height:16px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.2)}
+.bell{width:110px;height:110px;border-radius:50%;border:8px solid var(--metal);background:var(--m1);color:#fff;font-family:var(--f-display);font-weight:700;font-size:1rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.bell:active,.bell.on{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.keys{display:flex;gap:4px;background:var(--dark);padding:10px;border-radius:12px;max-width:100%;overflow-x:auto}
+.key{width:46px;height:110px;border:0;border-radius:6px;background:var(--metal);display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-weight:700;font-size:.8rem;color:#1E3640;flex:none}
+.key.on{background:var(--m2)}
+.vol{display:flex;align-items:center;gap:10px;font-size:.9rem}
+.vol input{width:140px}
+
+/* Generales */
+.general{display:flex;flex-direction:column;gap:18px}
+.g-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.g-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.g-card svg{width:100%;height:auto;border-radius:10px}
+.g-card p{font-size:.93rem}
+.stop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.stop li{background:var(--bad-soft);border-radius:12px;padding:10px 12px;font-size:.93rem}
+.stop b{color:var(--bad)}
+
+.checklist{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.checklist ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.checklist label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;padding:8px 10px;border-radius:10px;cursor:pointer}
+.checklist label:hover{background:var(--scene)}
+.checklist input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+.checklist input:checked + span{color:var(--muted);text-decoration:line-through}
+.status{font-weight:700}
+footer{font-size:.85rem;color:var(--muted);max-width:70ch}
+
+@media (max-width:900px){
+  .top,.cols,.do-dont{grid-template-columns:1fr}
+  .board-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .g-grid{grid-template-columns:1fr 1fr}
+  .checklist ul{grid-template-columns:1fr}
+  .stop{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .board-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .d-head{grid-template-columns:auto minmax(0,1fr)}
+  .d-nav{grid-column:1/-1;justify-content:flex-start}
+  .d-badge{width:64px;height:64px}.d-badge svg{width:48px;height:48px}
+  .card{grid-template-columns:1fr}
+  .g-grid{grid-template-columns:1fr}
+  .stop{grid-template-columns:1fr}
+  .d-body,.d-head{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="intro">
+      <span class="eyebrow">Terapia Ocupacional · Guía del operador</span>
+      <h1>Panel Modular de Actividades</h1>
+      <p class="muted">Toca un módulo del panel para ver cómo se usa, qué puede hacer el niño y qué hay que evitar por su seguridad. Las instrucciones parten del instructivo del panel.</p>
+      <div class="legend">
+        <span class="pill ok">✓ Puede hacerlo</span>
+        <span class="pill bad">✕ Evitar / detener</span>
+      </div>
+    </div>
+    <div class="session" aria-live="polite">
+      <div class="row"><strong>Sesión actual</strong><span id="sessCount" class="muted"></span></div>
+      <div class="bar"><span id="sessBar"></span></div>
+      <div class="row">
+        <span class="muted" style="font-size:.9rem">Marca cada módulo cuando el niño lo trabaje.</span>
+        <button class="btn ghost small" id="resetSess">Nueva sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="board" aria-label="Módulos del panel">
+    <div class="board-grid" id="board"></div>
+  </section>
+
+  <section class="detail" id="detail" aria-live="polite"></section>
+
+  <section class="general">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span class="eyebrow">Para todos los módulos</span>
+      <h2>Reglas generales de seguridad</h2>
+    </div>
+    <div class="g-grid" id="general"></div>
+    <h3>Señales para detener la actividad</h3>
+    <ul class="stop">
+      <li><b>Se cubre los oídos</b> o se aleja del sonido o la luz.</li>
+      <li><b>Llanto, gritos o frustración</b> que no baja después de una pausa breve.</li>
+      <li><b>Dedos enrojecidos</b>, marcas en la piel o queja de dolor.</li>
+      <li><b>Se lleva piezas a la boca</b> de forma repetida.</li>
+      <li><b>Cansancio</b>: se recarga, bosteza o pierde atención.</li>
+      <li><b>Pieza floja o rota</b>: retira al niño del módulo y repórtalo.</li>
+    </ul>
+  </section>
+
+  <section class="checklist">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span class="eyebrow">Antes de empezar</span>
+        <h2>Revisión previa a la sesión</h2>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span class="status" id="chkStatus"></span>
+        <button class="btn ghost small" id="chkReset">Desmarcar todo</button>
+      </div>
+    </div>
+    <ul id="checks"></ul>
+  </section>
+
+  <footer>Esta guía apoya al operador y no sustituye el criterio del terapeuta ocupacional a cargo. Ajusta cada actividad a la edad, el diagnóstico y el plan de intervención del niño. Las marcas de sesión y de revisión se guardan solo en este navegador.</footer>
+</div>
+
+<script>
+/* ---------- Iconos de los objetos (caja 60x60) ---------- */
+const O='stroke="var(--outline)" stroke-width="1.6" stroke-linejoin="round"';
+function gearPath(cx,cy,r,t){let p=[];for(let i=0;i<t*4;i++){const a=i/(t*4)*Math.PI*2;const rr=(i%4<2)?r:r*.76;p.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1))}return p.join(' ')}
+const ICON={
+ zipper:`<g ${O}><rect x="13" y="4" width="15" height="52" rx="2" fill="var(--fabric)"/><rect x="32" y="4" width="15" height="52" rx="2" fill="var(--fabric)"/>${[...Array(8)].map((_,i)=>`<rect x="${i%2?30:25}" y="${28+i*3.4}" width="5" height="3" fill="var(--metal)" stroke-width="1"/>`).join('')}<rect x="23" y="16" width="14" height="12" rx="3" fill="var(--metal)"/><rect x="26.5" y="26" width="7" height="16" rx="3.5" fill="var(--m1)"/></g>`,
+ button:`<g ${O}><rect x="4" y="12" width="52" height="38" rx="5" fill="var(--fabric2)"/><line x1="30" y1="12" x2="30" y2="50" stroke-dasharray="3 3"/><circle cx="18" cy="31" r="10" fill="var(--m1)"/>${[[15,28],[21,28],[15,34],[21,34]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.5" fill="var(--outline)" stroke="none"/>`).join('')}<rect x="37" y="27" width="14" height="7" rx="3.5" fill="var(--outline)"/></g>`,
+ velcro:`<g ${O}><rect x="4" y="9" width="52" height="17" rx="3" fill="var(--m5)"/><rect x="4" y="34" width="52" height="17" rx="3" fill="var(--m3)"/>${[...Array(8)].map((_,i)=>`<path d="M${9+i*6} 22 v-6 a2 2 0 0 1 4 0" fill="none" stroke-width="1.2"/>`).join('')}${[...Array(16)].map((_,i)=>`<circle cx="${8+(i%8)*6.2}" cy="${i<8?39:46}" r="1.4" fill="var(--outline)" stroke="none"/>`).join('')}</g>`,
+ lace:`<g ${O}><path d="M10 54 V16 q0-10 10-10 h20 q10 0 10 10 V54 Z" fill="var(--fabric)"/>${[0,1,2,3].map(i=>`<circle cx="21" cy="${22+i*8}" r="2.4" fill="var(--paper)"/><circle cx="39" cy="${22+i*8}" r="2.4" fill="var(--paper)"/>`).join('')}<path d="M21 46 L39 38 M39 46 L21 38 M21 38 L39 30 M39 38 L21 30 M21 30 L39 22 M39 30 L21 22" stroke="var(--lace)" stroke-width="2.4" fill="none"/><path d="M30 16 q-14 -12 -14 0 q0 6 14 0 q14 6 14 0 q0 -12 -14 0" fill="none" stroke="var(--lace)" stroke-width="2.4"/><path d="M28 17 l-6 10 M32 17 l6 10" stroke="var(--lace)" stroke-width="2.4"/></g>`,
+ led:`<g ${O}><rect x="3" y="16" width="54" height="30" rx="8" fill="var(--dark)"/><circle cx="16" cy="31" r="10" fill="#E8473A" opacity=".35" stroke="none"/><circle cx="16" cy="31" r="6.5" fill="#E8473A"/><circle cx="30" cy="31" r="6.5" fill="#3DBE5C"/><circle cx="44" cy="31" r="10" fill="#3D7BE8" opacity=".35" stroke="none"/><circle cx="44" cy="31" r="6.5" fill="#3D7BE8"/></g>`,
+ knob:`<g ${O}><rect x="8" y="3" width="44" height="54" rx="3" fill="var(--wood)"/><rect x="13" y="8" width="34" height="44" rx="2" fill="var(--m2)"/><rect x="11" y="13" width="4" height="8" fill="var(--metal)"/><rect x="11" y="39" width="4" height="8" fill="var(--metal)"/><circle cx="39" cy="31" r="6" fill="var(--metal)"/><circle cx="39" cy="31" r="2.4" fill="var(--paper)"/></g>`,
+ bottle:`<g ${O}><rect x="21" y="3" width="18" height="10" rx="2.5" fill="var(--m1)"/>${[24,28,32,36].map(x=>`<line x1="${x}" y1="5" x2="${x}" y2="11" stroke-width="1"/>`).join('')}<rect x="24" y="13" width="12" height="7" fill="var(--paper)"/><path d="M24 20 q-9 4 -9 14 V52 q0 4 4 4 h22 q4 0 4 -4 V34 q0 -10 -9 -14 Z" fill="var(--m5)" opacity=".85"/><path d="M19 38 h22" stroke="var(--paper)" stroke-width="2"/></g>`,
+ gear:`<g ${O}><polygon points="${gearPath(24,34,17,9)}" fill="var(--m2)"/><circle cx="24" cy="34" r="5" fill="var(--paper)"/><polygon points="${gearPath(45,18,11,7)}" fill="var(--m3)"/><circle cx="45" cy="18" r="3.4" fill="var(--paper)"/><path d="M24 34 L8 52" stroke-width="4" stroke-linecap="round"/><circle cx="8" cy="52" r="5" fill="var(--m1)"/></g>`,
+ pencil:`<g ${O}><rect x="3" y="6" width="38" height="48" rx="5" fill="var(--m4)"/><rect x="7" y="10" width="30" height="34" rx="2" fill="var(--paper)"/><path d="M11 22 q5 -8 9 0 t9 0 M12 34 q6 -6 12 2" fill="none" stroke="var(--metal)" stroke-width="2"/><rect x="8" y="47" width="28" height="4" rx="2" fill="var(--metal)"/><path d="M44 8 h8 v34 l-4 10 l-4 -10 Z" fill="var(--m2)"/><path d="M44 42 h8" /><path d="M48 8 q-6 -6 -12 2" fill="none" stroke-width="1.2"/></g>`,
+ maze:`<g ${O}><rect x="3" y="3" width="54" height="54" rx="6" fill="var(--m3)"/><path d="M10 48 C10 30 26 44 28 28 S48 34 48 14" fill="none" stroke="var(--outline)" stroke-width="5" stroke-linecap="round"/><path d="M10 48 C10 30 26 44 28 28 S48 34 48 14" fill="none" stroke="var(--paper)" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="28" r="6" fill="var(--m1)"/></g>`,
+ bell:`<g ${O}><rect x="4" y="12" width="40" height="40" rx="8" fill="var(--wood)"/><circle cx="24" cy="32" r="14" fill="var(--metal)"/><circle cx="24" cy="32" r="8" fill="var(--m1)"/><path d="M48 24 q5 8 0 16 M53 19 q9 13 0 26" fill="none" stroke-width="2" stroke-linecap="round"/></g>`,
+ keys:`<g ${O}><rect x="2" y="16" width="56" height="30" rx="5" fill="var(--dark)"/>${[...Array(7)].map((_,i)=>`<rect x="${6+i*7}" y="21" width="6" height="20" rx="1.5" fill="var(--metal)" stroke-width="1"/>`).join('')}<circle cx="50" cy="11" r="3" fill="var(--m1)"/><path d="M50 14 L48 30" stroke-width="2"/></g>`,
+ texture:`<g ${O}><rect x="3" y="3" width="26" height="26" rx="3" fill="var(--m2)"/>${[...Array(9)].map((_,i)=>`<circle cx="${9+(i%3)*7}" cy="${9+Math.floor(i/3)*7}" r="2" fill="var(--outline)" stroke="none"/>`).join('')}<rect x="31" y="3" width="26" height="26" rx="3" fill="var(--m4)"/><path d="M34 9 h20 M34 15 h20 M34 21 h20 M34 27 h20" stroke-width="1.6"/><rect x="3" y="31" width="26" height="26" rx="3" fill="var(--m5)"/>${[...Array(6)].map((_,i)=>`<circle cx="${9+(i%3)*7}" cy="${38+Math.floor(i/3)*10}" r="4.5" fill="var(--paper)" stroke-width="1"/>`).join('')}<rect x="31" y="31" width="26" height="26" rx="3" fill="var(--m1)"/><path d="M34 52 l5 -8 l5 8 l5 -8 l5 8" fill="none" stroke-width="1.6"/></g>`,
+ panel:`<g ${O}><rect x="3" y="5" width="54" height="50" rx="5" fill="var(--wood)"/>${[[7,9,'m1'],[22,9,'m2'],[37,9,'m3'],[7,24,'m4'],[22,24,'m5'],[37,24,'m1'],[7,39,'m3'],[22,39,'m2'],[37,39,'m4']].map(([x,y,c])=>`<rect x="${x}" y="${y}" width="13" height="12" rx="2" fill="var(--${c})" stroke-width="1"/>`).join('')}</g>`
+};
+const place=(o,cx,cy,s)=>`<g transform="translate(${cx-30*s} ${cy-30*s}) scale(${s})">${ICON[o]}</g>`;
+
+/* ---------- Piezas de dibujo ---------- */
+function hand(x,y,rot,s=1,sleeve='sleeve',point=true){
+ return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})" stroke="var(--outline)" stroke-width="2" stroke-linejoin="round">
+ <rect x="-90" y="-12" width="32" height="28" rx="4" fill="var(--${sleeve})"/>
+ <rect x="-64" y="-15" width="40" height="32" rx="12" fill="var(--skin)"/>
+ ${point?'<rect x="-32" y="-13" width="34" height="12" rx="6" fill="var(--skin)"/>':'<path d="M-30 -8 h6 M-30 2 h6 M-30 11 h6" fill="none"/>'}
+ <ellipse cx="-42" cy="-15" rx="11" ry="5.5" fill="var(--skin)"/></g>`}
+function face(x,y,r,mood='smile'){
+ const ey=y-r*.02, ex=r*.36;
+ let m='';
+ if(mood==='smile') m=`<path d="M${x-r*.34} ${y+r*.32} Q${x} ${y+r*.68} ${x+r*.34} ${y+r*.32}" fill="none" stroke="var(--outline)" stroke-width="2.4" stroke-linecap="round"/>`;
+ if(mood==='open') m=`<ellipse cx="${x}" cy="${y+r*.45}" rx="${r*.18}" ry="${r*.22}" fill="var(--outline)"/>`;
+ if(mood==='sad') m=`<path d="M${x-r*.3} ${y+r*.52} Q${x} ${y+r*.25} ${x+r*.3} ${y+r*.52}" fill="none" stroke="var(--outline)" stroke-width="2.4" stroke-linecap="round"/>`;
+ if(mood==='wow') m=`<circle cx="${x}" cy="${y+r*.45}" r="${r*.12}" fill="var(--outline)"/>`;
+ return `<g><circle cx="${x-r}" cy="${y+r*.05}" r="${r*.18}" fill="var(--skin2)"/><circle cx="${x+r}" cy="${y+r*.05}" r="${r*.18}" fill="var(--skin2)"/>
+ <circle cx="${x}" cy="${y}" r="${r}" fill="var(--skin)" stroke="var(--outline)" stroke-width="2"/>
+ <path d="M${x-r} ${y-r*.05} A${r} ${r} 0 0 1 ${x+r} ${y-r*.05} Q${x+r*.55} ${y-r*.6} ${x+r*.05} ${y-r*.5} Q${x-r*.5} ${y-r*.62} ${x-r} ${y-r*.05}Z" fill="var(--hair)" stroke="var(--outline)" stroke-width="2"/>
+ <circle cx="${x-ex}" cy="${ey}" r="${r*.09}" fill="var(--outline)"/><circle cx="${x+ex}" cy="${ey}" r="${r*.09}" fill="var(--outline)"/>
+ <circle cx="${x-r*.58}" cy="${y+r*.28}" r="${r*.13}" fill="var(--cheek)" opacity=".55"/><circle cx="${x+r*.58}" cy="${y+r*.28}" r="${r*.13}" fill="var(--cheek)" opacity=".55"/>${m}</g>`}
+function adult(x,y,r){return `<g><circle cx="${x}" cy="${y}" r="${r}" fill="var(--skin2)" stroke="var(--outline)" stroke-width="2"/><path d="M${x-r} ${y} A${r} ${r} 0 0 1 ${x+r} ${y} L${x+r} ${y-r*.25} Q${x} ${y-r*.75} ${x-r} ${y-r*.25}Z" fill="var(--outline)"/><circle cx="${x-r*.35}" cy="${y+r*.05}" r="${r*.08}" fill="var(--outline)"/><circle cx="${x+r*.35}" cy="${y+r*.05}" r="${r*.08}" fill="var(--outline)"/><path d="M${x-r*.3} ${y+r*.38} Q${x} ${y+r*.6} ${x+r*.3} ${y+r*.38}" fill="none" stroke="var(--outline)" stroke-width="2.2" stroke-linecap="round"/><path d="M${x-r*1.2} ${y+r*2.2} Q${x-r*1.1} ${y+r*1.05} ${x} ${y+r*1.05} Q${x+r*1.1} ${y+r*1.05} ${x+r*1.2} ${y+r*2.2}Z" fill="var(--sleeve2)" stroke="var(--outline)" stroke-width="2"/></g>`}
+function arrow(x1,y1,x2,y2,c,w=4){const a=Math.atan2(y2-y1,x2-x1),h=w*2.6;const p1=[x2-h*Math.cos(a-0.5),y2-h*Math.sin(a-0.5)],p2=[x2-h*Math.cos(a+0.5),y2-h*Math.sin(a+0.5)];
+ return `<line x1="${x1}" y1="${y1}" x2="${x2-Math.cos(a)*h*.6}" y2="${y2-Math.sin(a)*h*.6}" stroke="var(--${c})" stroke-width="${w}" stroke-linecap="round"/><polygon points="${x2},${y2} ${p1.join(',')} ${p2.join(',')}" fill="var(--${c})"/>`}
+function star(x,y,r,c='bad'){let p=[];for(let i=0;i<16;i++){const a=i/16*Math.PI*2,rr=i%2?r*.45:r;p.push((x+rr*Math.cos(a)).toFixed(1)+','+(y+rr*Math.sin(a)).toFixed(1))}return `<polygon points="${p.join(' ')}" fill="var(--${c})" opacity=".9"/>`}
+function bubble(x,y,w,t){return `<g><rect x="${x}" y="${y}" width="${w}" height="30" rx="14" fill="var(--surface)" stroke="var(--outline)" stroke-width="2"/><path d="M${x+14} ${y+29} l-10 12 l20 -12" fill="var(--surface)" stroke="var(--outline)" stroke-width="2" stroke-linejoin="round"/><rect x="${x+8}" y="${y+26}" width="22" height="4" fill="var(--surface)"/><text x="${x+w/2}" y="${y+20}" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="600" font-size="14" fill="var(--ink)">${t}</text></g>`}
+function wave(x,y,dir=1,c='outline'){return `<path d="M${x} ${y-8} q${8*dir} 8 0 16 M${x+8*dir} ${y-15} q${13*dir} 15 0 30 M${x+16*dir} ${y-22} q${18*dir} 22 0 44" fill="none" stroke="var(--${c})" stroke-width="3" stroke-linecap="round"/>`}
+const motion=(x,y,c='outline')=>`<path d="M${x} ${y} h-14 M${x+2} ${y+8} h-18 M${x} ${y+16} h-12" stroke="var(--${c})" stroke-width="2.4" stroke-linecap="round" opacity=".6"/>`;
+
+/* ---------- Escenas (200x140) ---------- */
+const SC={
+ gentle:(o)=>place(o,88,70,1.55)+hand(120,92,212,.85)+`<path d="M150 40 q10 10 0 20 M160 34 q14 16 0 32" fill="none" stroke="var(--ok)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 6"/>`+bubble(128,10,58,'suave'),
+ slide:(o)=>place(o,80,70,1.6)+arrow(148,70,148,22,'ok')+arrow(148,70,148,118,'ok')+bubble(160,54,36,'↕'),
+ turn:(o)=>place(o,86,72,1.5)+`<path d="M140 40 A50 50 0 0 1 148 104" fill="none" stroke="var(--ok)" stroke-width="4" stroke-linecap="round"/>`+arrow(150,96,147,108,'ok',4)+`<path d="M36 104 A50 50 0 0 1 30 44" fill="none" stroke="var(--ok)" stroke-width="4" stroke-linecap="round" opacity=".5"/>`,
+ press:(o)=>place(o,100,92,1.3)+hand(100,74,90,.62)+`<path d="M78 58 l-8 -6 M122 58 l8 -6 M74 70 h-10 M126 70 h10" stroke="var(--ok)" stroke-width="3" stroke-linecap="round"/>`,
+ pinch:(o)=>place(o,84,72,1.5)+hand(108,62,200,.7)+`<circle cx="108" cy="58" r="12" fill="none" stroke="var(--ok)" stroke-width="3" stroke-dasharray="3 4"/>`,
+ together:(o)=>adult(46,46,22)+face(150,70,22,'smile')+`<path d="M150 92 Q150 108 132 116" stroke="var(--sleeve)" stroke-width="10" stroke-linecap="round" fill="none"/>`+place(o,100,104,.75)+`<path d="M60 52 Q84 70 92 86" fill="none" stroke="var(--ok)" stroke-width="2.5" stroke-dasharray="4 5"/><path d="M136 74 Q118 84 108 88" fill="none" stroke="var(--ok)" stroke-width="2.5" stroke-dasharray="4 5"/>`,
+ name:(o,t='¡rojo!')=>face(58,78,34,'open')+bubble(104,18,86,t)+place(o,150,100,.7),
+ both:(o)=>place(o,100,68,1.4)+hand(62,96,-40,.6)+hand(140,96,220,.6),
+ back:(o)=>place(o,72,70,1.5)+`<path d="M120 50 h40 a16 16 0 0 1 0 32 h-40" fill="none" stroke="var(--ok)" stroke-width="4" stroke-linecap="round"/>`+arrow(140,82,118,82,'ok')+bubble(128,14,62,'en su lugar'),
+ // Prohibidos
+ mouth:(o)=>face(78,72,38,'open')+place(o,150,84,.62)+motion(132,78,'bad')+arrow(140,96,104,92,'bad',3),
+ force:(o)=>place(o,92,70,1.4)+hand(150,74,0,.7,'sleeve',false)+arrow(146,40,192,40,'bad',5)+`<path d="M58 30 l6 8 l-6 6 l6 8 M126 104 l6 6 l-6 6 l6 6" fill="none" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>`+bubble(10,8,52,'¡fuerte!'),
+ pinchbad:(o)=>place(o,86,72,1.55)+hand(98,72,200,.72)+star(96,66,15)+bubble(124,12,62,'¡auch!'),
+ neck:()=>face(100,52,28,'sad')+`<path d="M62 140 Q64 88 100 86 Q136 88 138 140Z" fill="var(--m5)" stroke="var(--outline)" stroke-width="2"/><path d="M74 84 Q100 104 126 84" fill="none" stroke="var(--lace)" stroke-width="5" stroke-linecap="round"/><path d="M78 80 Q100 98 122 80" fill="none" stroke="var(--lace)" stroke-width="4" stroke-linecap="round" opacity=".8"/><path d="M126 84 Q150 100 160 128" fill="none" stroke="var(--lace)" stroke-width="5" stroke-linecap="round"/>`+star(104,88,8),
+ fingerwrap:()=>`<g transform="translate(40 30)">${hand(90,40,-30,1.1)}</g><path d="M106 44 q8 -6 10 4 q-12 6 -10 -4 M112 38 q9 -6 10 5" fill="none" stroke="var(--lace)" stroke-width="5" stroke-linecap="round"/><path d="M110 56 Q130 90 170 100" fill="none" stroke="var(--lace)" stroke-width="5" stroke-linecap="round"/>`+star(132,34,10),
+ eyes:(o)=>face(62,72,36,'wow')+place(o,124,68,.9)+`<path d="M108 62 L82 64 M108 70 L82 72 M108 78 L84 80" stroke="var(--m2)" stroke-width="3" stroke-linecap="round"/>`+bubble(122,14,70,'muy cerca'),
+ ears:(o)=>face(80,72,34,'sad')+`<ellipse cx="44" cy="74" rx="10" ry="16" fill="var(--skin)" stroke="var(--outline)" stroke-width="2"/><ellipse cx="116" cy="74" rx="10" ry="16" fill="var(--skin)" stroke="var(--outline)" stroke-width="2"/>`+wave(136,72,1,'bad')+(o?place(o,176,112,.5):''),
+ poke:()=>face(56,72,34,'wow')+`<g stroke="var(--outline)" stroke-width="2" stroke-linejoin="round"><polygon points="98,66 116,58 116,74" fill="var(--paper)"/><polygon points="98,66 104,63 104,69" fill="var(--outline)"/><rect x="116" y="58" width="62" height="16" fill="var(--m2)"/><rect x="178" y="58" width="12" height="16" fill="var(--m1)"/></g>`+star(86,66,9),
+ hit:(o)=>place(o,100,92,1.25)+hand(100,46,90,.62,'sleeve',false)+star(100,62,13)+`<path d="M70 24 v14 M130 24 v14" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>`+bubble(132,10,56,'¡pum!'),
+ climb:()=>place('panel',100,64,1.7)+`<g stroke="var(--outline)" stroke-width="3" stroke-linecap="round" fill="none"><path d="M86 18 L96 36 M114 18 L104 36"/><path d="M100 36 V70"/><path d="M100 70 L88 92 M100 70 L114 90"/></g>`+face(100,40,10,'open')+`<line x1="40" y1="132" x2="160" y2="132" stroke="var(--outline)" stroke-width="2"/>`+arrow(100,100,100,124,'bad',3)+bubble(4,92,66,'¡cuidado!'),
+ water:(o)=>place(o,96,94,1.15)+`<g stroke="var(--outline)" stroke-width="2"><path d="M120 14 l30 10 l-10 30 l-30 -10 Z" fill="var(--m5)" opacity=".8"/></g><path d="M110 44 q-2 8 -6 10 M100 56 q-1 5 -3 7 M112 58 q-1 5 -3 7" stroke="var(--m5)" stroke-width="4" stroke-linecap="round"/>`+star(70,62,10)+`<path d="M64 52 l6 -10 l-2 8 l6 -2 l-6 10" fill="var(--m2)" stroke="var(--outline)" stroke-width="1.2"/>`,
+ wires:(o)=>place(o,78,74,1.4)+`<path d="M112 70 q10 -14 20 0 t20 0 M112 84 q10 -14 20 0 t20 0" fill="none" stroke="var(--m1)" stroke-width="3"/><path d="M164 44 l-12 22 h10 l-12 22" fill="none" stroke="var(--m2)" stroke-width="4" stroke-linejoin="round"/>`+hand(124,110,-30,.55),
+ slam:(o)=>place(o,90,72,1.5)+`<path d="M138 22 A60 60 0 0 1 140 120" fill="none" stroke="var(--bad)" stroke-width="5" stroke-linecap="round"/>`+arrow(141,112,138,124,'bad',5)+`<path d="M48 40 l-14 -6 M46 70 h-16 M48 100 l-14 6" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>`+bubble(144,12,52,'¡pum!'),
+ hang:(o)=>place(o,100,46,1.1)+`<g stroke="var(--outline)" stroke-width="3" stroke-linecap="round" fill="none"><path d="M106 50 L100 70 V100 M100 100 L90 122 M100 100 L112 120 M100 74 L88 84"/></g>`+face(100,62,9,'open')+arrow(140,70,140,118,'bad',4)+`<line x1="40" y1="134" x2="170" y2="134" stroke="var(--outline)" stroke-width="2"/>`,
+ hair:(o)=>face(50,62,30,'smile')+`<path d="M26 62 Q30 110 92 92 Q110 86 124 82" fill="none" stroke="var(--hair)" stroke-width="10" stroke-linecap="round"/>`+place(o,150,80,1.1)+star(128,80,10),
+ throw:(o)=>hand(52,104,-40,.7)+`<path d="M64 88 Q110 0 170 70" fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="5 6"/>`+place(o,168,84,.6)+star(170,108,9),
+ fast:(o)=>place(o,86,72,1.5)+`<g fill="none" stroke="var(--bad)" stroke-width="4" stroke-linecap="round"><path d="M138 30 A56 56 0 0 1 142 112"/><path d="M152 38 A50 50 0 0 1 156 106"/></g>`+bubble(140,4,58,'¡rápido!'),
+ scratch:(o)=>place(o,86,74,1.55)+hand(118,98,212,.85,'sleeve',false)+`<path d="M60 42 l40 40 M70 36 l40 40 M80 32 l38 38" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/>`,
+ refuse:(o)=>face(58,66,32,'sad')+place(o,150,84,1)+hand(92,112,200,.6)+arrow(96,92,60,104,'bad',3)+bubble(100,10,74,'no quiero'),
+ loud:(o)=>place(o,64,78,1.2)+wave(112,74,1,'bad')+`<g transform="translate(150 22)"><rect x="0" y="10" width="10" height="14" fill="var(--outline)"/><polygon points="10,10 24,0 24,34 10,24" fill="var(--outline)"/><path d="M30 6 q8 11 0 22 M36 0 q13 17 0 34" fill="none" stroke="var(--bad)" stroke-width="3"/></g>`,
+};
+function scene(spec,kind){
+ const fn=SC[spec.s]; const inner=fn(spec.o,spec.t);
+ const bg=kind==='ok'?'var(--surface)':'var(--surface)';
+ const badge=kind==='ok'
+  ?`<circle cx="180" cy="122" r="14" fill="var(--ok)"/><path d="M173 122 l5 5 l9 -10" fill="none" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`
+  :kind==='bad'?`<circle cx="180" cy="122" r="14" fill="var(--bad)"/><path d="M174 116 l12 12 M186 116 l-12 12" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round"/>`:'';
+ return `<svg viewBox="0 0 200 140" role="img" aria-label="${spec.alt||''}" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="140" fill="${bg}"/>${inner}${badge}</svg>`;
+}
+
+/* ---------- Contenido de los módulos ---------- */
+const ST=[
+ {n:1,name:'Cierres diversos',icon:'zipper',c:'m1',wide:true,skills:['Pinza fina','Coordinación bimanual','Autocuidado (vestido)'],
+  orig:['Zipper: suba y baje con discreción el zipper.','Botones: introduzca el botón en la ranura del otro extremo de tela.','Velcro: una las piezas de velcro una a otra.'],
+  steps:[
+   {sub:'Cierre (zipper)'},
+   ['Sujeta la base','El niño detiene la tela de abajo con una mano para que no se mueva.'],
+   ['Toma el jalador','Con pulgar e índice (pinza) toma la lengüeta del cierre.'],
+   ['Sube y baja despacio','Desliza sin tirones. Si se atora, regresa un poco y vuelve a intentar.'],
+   {sub:'Botones'},
+   ['Toma el botón con pinza','Pulgar e índice, la otra mano sostiene el ojal.'],
+   ['Pasa el botón por el ojal','Introduce media orilla del botón y luego empuja el resto.'],
+   {sub:'Velcro'},
+   ['Alinea las dos piezas','Pon una tira encima de la otra.'],
+   ['Presiona para unir','Aprieta con la palma. Para separar, despega desde una esquina.']],
+  ok:[{s:'slide',o:'zipper',h:'Subir y bajar el cierre con calma',p:'Con la base sujeta y a su ritmo. Puede repetirlo varias veces.'},
+      {s:'pinch',o:'button',h:'Usar la pinza con el botón',p:'Tomar el botón con dos dedos y pasarlo por el ojal.'},
+      {s:'gentle',o:'velcro',h:'Unir y despegar el velcro',p:'Despegar desde una esquina, sin arrancar la tira del panel.'}],
+  no:[{s:'mouth',o:'button',h:'Llevarse botones o el jalador a la boca',p:'Son piezas pequeñas: riesgo de asfixia. Retira la mano con calma.'},
+      {s:'pinchbad',o:'zipper',h:'Meter dedos o piel entre los dientes',p:'El cierre puede pellizcar. La mano libre va en la base, no junto al jalador.'},
+      {s:'force',o:'velcro',h:'Jalar la tela con fuerza',p:'Arrancar tela o velcro puede soltar piezas o lastimar las uñas.'}],
+  note:'Si el botón queda flojo o la tela se descose, retira el módulo de uso hasta repararlo.'},
+ {n:2,name:'Abrochar agujetas',icon:'lace',c:'m2',skills:['Secuenciación','Coordinación ojo-mano','Autocuidado (calzado)'],
+  orig:['Átense las agujetas hasta ajustarse correctamente.'],
+  steps:[['Pasa la punta por los ojillos','De abajo hacia arriba, alternando lados.'],['Ajusta las dos puntas','Que queden del mismo largo.'],['Haz el nudo','Cruza una agujeta sobre la otra y pásala por debajo.'],['Haz el moño','Dos "orejitas", se cruzan y se aprietan. Ayuda con la mano si lo necesita.']],
+  ok:[{s:'pinch',o:'lace',h:'Pasar la punta por cada ojillo',p:'Sosteniendo la punta plástica con pinza.'},
+      {s:'together',o:'lace',h:'Hacer el moño con ayuda',p:'El adulto puede guiar la mano del niño las primeras veces.'},
+      {s:'both',o:'lace',h:'Usar ambas manos',p:'Una sostiene, la otra tira suavemente para ajustar.'}],
+  no:[{s:'neck',h:'Rodear el cuello con la agujeta',p:'Riesgo de estrangulamiento. Nunca se pone alrededor del cuello, ni en juego.'},
+      {s:'fingerwrap',h:'Enrollar la agujeta en los dedos',p:'Corta la circulación. Si ves el dedo morado o blanco, suelta de inmediato.'},
+      {s:'mouth',o:'lace',h:'Morder las puntas',p:'La punta plástica puede desprenderse y tragarse.'}],
+  note:'La agujeta debe estar anclada al panel y medir lo justo para la actividad: mejor corta que sobrada.'},
+ {n:3,name:'Colores con luz (LEDs)',icon:'led',c:'m3',skills:['Causa y efecto','Discriminación de colores','Atención visual'],sim:'led',
+  orig:['Presione el botón para encender un LED con el color del botón. Presione 2 o 3 a la vez para obtener diferentes colores.'],
+  steps:[['Presiona un botón','Se enciende la luz del mismo color. Nombren el color juntos.'],['Presiona dos a la vez','Descubran el nuevo color que aparece (por ejemplo, rojo + verde = amarillo).'],['Presiona los tres','Se forma luz blanca.'],['Suelta y descansa','Haz pausas para que el niño no mire la luz por mucho tiempo.']],
+  ok:[{s:'press',o:'led',h:'Presionar uno, dos o tres botones',p:'Con la yema del dedo, sin golpear.'},
+      {s:'name',o:'led',t:'¡amarillo!',h:'Nombrar el color que aparece',p:'Pregunta "¿qué color salió?" para trabajar lenguaje y atención.'}],
+  no:[{s:'eyes',o:'led',h:'Mirar la luz pegado a los ojos',p:'Mantén al niño a la distancia de su brazo. Evita que mire fijo por mucho rato.'},
+      {s:'hit',o:'led',h:'Golpear los botones',p:'Se rompen los botones y la luz puede quedar expuesta.'},
+      {s:'wires',o:'led',h:'Abrir la caja o tocar cables',p:'La parte eléctrica solo la revisa un adulto, con el panel desconectado.'}],
+  note:'Si el niño tiene epilepsia o sensibilidad a la luz, consulta con el terapeuta antes de usar este módulo y evita encender y apagar muy rápido.'},
+ {n:4,name:'Perilla de puerta',icon:'knob',c:'m4',skills:['Rotación de muñeca','Fuerza de agarre','Exploración'],
+  orig:['Gire de forma gentil la perilla para poder abrir la mini-puerta.'],
+  steps:[['Toma la perilla con toda la mano','Dedos alrededor de la perilla.'],['Gira la muñeca despacio','Hasta sentir que la puerta se libera.'],['Abre la puerta','Descubran lo que hay detrás.'],['Cierra con cuidado','Acompaña la puerta hasta el final, con la mano en la perilla.']],
+  ok:[{s:'turn',o:'knob',h:'Girar la perilla con suavidad',p:'Movimiento de muñeca, sin jalar la puerta.'},
+      {s:'back',o:'knob',h:'Cerrar acompañando la puerta',p:'La mano en la perilla hasta que la puerta cierre.'}],
+  no:[{s:'pinchbad',o:'knob',h:'Poner los dedos en la orilla al cerrar',p:'La bisagra y el marco pueden pellizcar los dedos.'},
+      {s:'slam',o:'knob',h:'Azotar la puerta',p:'Puede romper la bisagra y lastimar la mano.'},
+      {s:'hang',o:'knob',h:'Colgarse de la perilla',p:'La perilla no soporta peso. El niño puede caer y desprender la pieza.'}]},
+ {n:5,name:'Rosca de botella',icon:'bottle',c:'m5',skills:['Rotación digital','Coordinación bimanual','Fuerza de pinza'],
+  orig:['Gire la tapa para poder ajustarla con la boca de la botella.'],
+  steps:[['Sostén la botella','Una mano firme en el cuerpo de la botella.'],['Coloca la tapa derecha','La tapa encima de la boca, sin inclinar.'],['Gira para cerrar','Hacia la derecha hasta sentir que se ajusta. Sin apretar de más.'],['Gira para abrir','Hacia la izquierda.']],
+  ok:[{s:'turn',o:'bottle',h:'Girar la tapa para cerrar y abrir',p:'Derecha cierra, izquierda abre.'},
+      {s:'both',o:'bottle',h:'Sostener con una mano y girar con la otra',p:'Así trabaja coordinación de ambas manos.'}],
+  no:[{s:'mouth',o:'bottle',h:'Meterse la tapa a la boca',p:'La tapa es pequeña: riesgo de asfixia. Debe estar atada al panel con un cordón corto.'},
+      {s:'force',o:'bottle',h:'Apretar o forzar la rosca',p:'Barre la rosca y lastima los dedos.'},
+      {s:'throw',o:'bottle',h:'Lanzar la tapa',p:'Si se suelta, guárdala y retómalo cuando el niño esté tranquilo.'}]},
+ {n:6,name:'Engranajes con manivela',icon:'gear',c:'m1',skills:['Movimiento circular','Causa y efecto','Control de fuerza'],
+  orig:['Suba y baje el cierre con discreción, sin mucha fuerza.'],
+  steps:[['Toma la manivela','Por el mango, lejos de los engranajes.'],['Gira despacio','Un sentido a la vez, con movimiento de brazo y muñeca.'],['Observa los engranajes','Pregunta hacia dónde gira el engranaje pequeño.'],['Cambia de sentido','Detén por completo antes de girar al revés.']],
+  ok:[{s:'turn',o:'gear',h:'Girar la manivela despacio',p:'Sin mucha fuerza, tomándola siempre del mango.'},
+      {s:'name',o:'gear',t:'¡gira!',h:'Observar y describir el movimiento',p:'"¿Cuál gira más rápido, el grande o el chico?"'}],
+  no:[{s:'pinchbad',o:'gear',h:'Meter los dedos entre los engranajes',p:'Es el riesgo principal de este módulo: los dientes atrapan dedos.'},
+      {s:'fast',o:'gear',h:'Girar rápido o con fuerza',p:'Puede romper los dientes y golpear la mano con la manivela.'},
+      {s:'hair',o:'gear',h:'Cabello o ropa suelta cerca',p:'Recoge el cabello largo y quita cordones o mangas sueltas antes de empezar.'}]},
+ {n:7,name:'Lápiz y pizarrón mágico',icon:'pencil',c:'m2',skills:['Prensión del lápiz','Grafomotricidad','Creatividad'],
+  orig:['Utilice el lápiz para garabatear en el pizarrón mágico.'],
+  steps:[['Saca el lápiz del sujetador','Tómalo como pinza, cerca de la punta.'],['Garabatea en el pizarrón','Líneas, círculos, o imitar una figura que dibuje el adulto.'],['Borra con la barra','Desliza la barra de un lado a otro.'],['Regresa el lápiz al sujetador','Así el lápiz no queda suelto.']],
+  ok:[{s:'gentle',o:'pencil',h:'Trazar líneas y círculos',p:'Sin apretar mucho. Puede copiar figuras sencillas.'},
+      {s:'back',o:'pencil',h:'Regresar el lápiz a su lugar',p:'Al terminar, siempre en el sujetador.'}],
+  no:[{s:'poke',h:'Apuntar el lápiz a la cara o a otra persona',p:'Riesgo de lesión en los ojos. El lápiz solo se usa en el pizarrón.'},
+      {s:'mouth',o:'pencil',h:'Morder el lápiz',p:'Se puede romper la punta o el cordón que lo sujeta.'},
+      {s:'scratch',o:'pencil',h:'Rayar o golpear con fuerza',p:'Rompe la pantalla del pizarrón.'}],
+  note:'El cordón del lápiz debe ser corto para que no alcance el cuello del niño.'},
+ {n:8,name:'Recorrido',icon:'maze',c:'m3',skills:['Planeación motora','Seguimiento visual','Control de movimiento'],
+  orig:['Mueva la pieza móvil a través del camino.'],
+  steps:[['Toma la pieza móvil','Con pinza o con la yema del dedo.'],['Sigue el camino','Despacio, sin sacar la pieza de la ranura.'],['Llega al final','Celebra el logro y regresa por el mismo camino.']],
+  ok:[{s:'pinch',o:'maze',h:'Mover la pieza por el camino',p:'Con pinza o un dedo, en ambas direcciones.'},
+      {s:'together',o:'maze',h:'Seguir el camino con la vista',p:'Pide que mire hacia dónde va antes de moverla.'}],
+  no:[{s:'force',o:'maze',h:'Jalar la pieza fuera de la ranura',p:'Se desprende y queda una pieza pequeña suelta.'},
+      {s:'mouth',o:'maze',h:'Llevar la pieza a la boca',p:'Riesgo de asfixia si se desprende.'}]},
+ {n:9,name:'Botón de timbre',icon:'bell',c:'m4',skills:['Causa y efecto','Turnos','Respuesta auditiva'],sim:'bell',
+  orig:['Presione el botón para hacer sonar un leve sonido.'],
+  steps:[['Presiona el botón una vez','Con un dedo y suelta.'],['Escucha el sonido','Observa la reacción del niño.'],['Toma turnos','"Ahora tú, ahora yo" para trabajar espera.']],
+  ok:[{s:'press',o:'bell',h:'Presionar con un dedo',p:'Una vez y soltar, esperando el sonido.'},
+      {s:'together',o:'bell',h:'Tomar turnos con el adulto',p:'Trabaja la espera y la interacción.'}],
+  no:[{s:'ears',o:'bell',h:'Seguir si se tapa los oídos',p:'Es una señal de molestia. Detén el sonido y ofrece otro módulo.'},
+      {s:'hit',o:'bell',h:'Golpear con el puño u objetos',p:'Rompe el mecanismo y puede lastimar la mano.'},
+      {s:'loud',o:'bell',h:'Presionar sin parar o volumen alto',p:'Mantén el volumen bajo y limita las repeticiones.'}]},
+ {n:10,name:'Estilófono',icon:'keys',c:'m5',skills:['Disociación de dedos','Ritmo','Imitación'],sim:'keys',
+  orig:['Presione gentilmente el teclado para producir una leve nota.'],
+  steps:[['Presiona una tecla suavemente','Se escucha una nota.'],['Toca varias, una a la vez','De izquierda a derecha: del sonido grave al agudo.'],['Imita una secuencia','El adulto toca 2 o 3 notas y el niño las repite.']],
+  ok:[{s:'press',o:'keys',h:'Presionar una tecla a la vez',p:'Con la yema, suave.'},
+      {s:'together',o:'keys',h:'Imitar notas del adulto',p:'Empieza con 2 notas y aumenta poco a poco.'}],
+  no:[{s:'hit',o:'keys',h:'Golpear el teclado',p:'Daña las teclas y el circuito.'},
+      {s:'loud',o:'keys',h:'Volumen alto',p:'Ajusta el volumen bajo antes de empezar la sesión.'},
+      {s:'force',o:'keys',h:'Jalar cables o el estilete',p:'Expone cables eléctricos.'}]},
+ {n:11,name:'Rompecabezas sensorial',icon:'texture',c:'m1',skills:['Discriminación táctil','Lenguaje descriptivo','Regulación sensorial'],
+  orig:['Frote suavemente la mano sobre las texturas para sentirlas e identificarlas.'],
+  steps:[['Muestra las texturas','Deja que el niño las mire antes de tocarlas.'],['Frota con la palma abierta','Despacio, una textura a la vez.'],['Nombra la textura','Suave, áspero, rugoso, liso.'],['Compara','"¿Cuál se siente igual?" Puede hacerlo con ojos cerrados si lo tolera.']],
+  ok:[{s:'gentle',o:'texture',h:'Frotar con la mano abierta',p:'Despacio, de una textura a otra.'},
+      {s:'name',o:'texture',t:'¡áspero!',h:'Nombrar cómo se siente',p:'Ayuda a describir: suave, áspero, rugoso, liso.'}],
+  no:[{s:'scratch',o:'texture',h:'Rascar o arrancar las texturas',p:'Se desprenden pedazos pequeños que pueden tragarse.'},
+      {s:'refuse',o:'texture',h:'Obligar a tocar una textura',p:'Si la rechaza, respeta su respuesta. Ofrece primero tocar con un dedo o con la ropa.'},
+      {s:'mouth',o:'texture',h:'Llevarse las texturas a la boca',p:'Son materiales para las manos, no para morder.'}],
+  note:'Revisa alergias a materiales (látex, lana, plásticos) en el expediente del niño.'}
+];
+
+const GENERAL=[
+ {s:'together',o:'panel',k:'ok',h:'Un adulto a su lado todo el tiempo',p:'Supervisión 1 a 1. Nunca dejes al niño solo frente al panel.'},
+ {s:'climb',k:'bad',h:'No subirse ni colgarse del panel',p:'El panel es para las manos. Debe estar fijo a la pared o a una base estable.'},
+ {s:'mouth',o:'button',k:'bad',h:'Nada a la boca',p:'Botones, tapas y piezas pequeñas pueden causar asfixia.'},
+ {s:'water',o:'led',k:'bad',h:'No mojar el panel',p:'Tiene partes eléctricas. Limpia con un paño apenas húmedo, sin rociar.'},
+ {s:'refuse',o:'texture',k:'bad',h:'No forzar una actividad',p:'Si el niño se niega o se altera, haz una pausa y cambia de módulo.'},
+ {s:'gentle',o:'panel',k:'ok',h:'Una actividad a la vez y con suavidad',p:'Explica, muestra y deja que lo intente. Celebra cada intento.'}
+];
+const CHECKS=['El panel está fijo y no se tambalea.','Botones, tapa, pieza del recorrido y lápiz están bien sujetos.','No hay astillas, tornillos salientes ni bordes filosos.','No hay cables expuestos y la tapa de las baterías está cerrada.','Volumen del timbre y del estilófono en nivel bajo.','Superficies limpias y desinfectadas.','Cabello largo recogido; sin bufandas ni cordones sueltos.','Revisé el expediente: alergias, epilepsia, sensibilidad auditiva o táctil.','Hay un adulto asignado a supervisar durante toda la sesión.'];
+
+/* ---------- Estado local (solo este navegador) ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let done=new Set(store.get('pm-done',[]));
+let checks=new Set(store.get('pm-checks',[]));
+let cur=1;
+
+/* ---------- Render ---------- */
+const $=s=>document.querySelector(s);
+const iconSvg=(o)=>`<svg viewBox="0 0 60 60" aria-hidden="true">${ICON[o]}</svg>`;
+function renderBoard(){
+ $('#board').innerHTML=ST.map(st=>`<button class="tile${st.wide?' wide':''}" data-n="${st.n}" aria-current="${st.n===cur}" style="background:var(--paper)">
+  <span class="num">${st.n}</span>${done.has(st.n)?'<span class="done" aria-label="trabajado">✓</span>':''}${iconSvg(st.icon)}<span class="nm">${st.name}</span></button>`).join('');
+ $('#board').querySelectorAll('.tile').forEach(b=>b.onclick=()=>go(+b.dataset.n,true));
+ const c=done.size; $('#sessCount').textContent=`${c} de ${ST.length} módulos trabajados`; $('#sessBar').style.width=(c/ST.length*100)+'%';
+}
+function cards(list,kind){return list.map(x=>`<div class="card">${scene({...x,alt:x.h},kind)}<div><h4>${x.h}</h4><p>${x.p}</p></div></div>`).join('')}
+function stepsHtml(steps){let out='',open=false;for(const s of steps){if(!Array.isArray(s)){if(open)out+='</ol>';out+=`<div class="sub">${s.sub}</div><ol class="steps">`;open=true}else{if(!open){out+='<ol class="steps">';open=true}out+=`<li><div><b>${s[0]}</b>${s[1]}</div></li>`}}return out+'</ol>'}
+function simHtml(k){
+ if(k==='led')return `<div class="sim"><h3>Pruébalo aquí antes de la sesión</h3><p class="muted">Toca los botones para ver qué color aparece al combinarlos.</p>
+  <div class="sim-row"><div class="led-out" id="ledOut" aria-hidden="true"></div><div style="display:flex;flex-direction:column;gap:10px">
+  <div class="led-btns">${[['r','#E8473A','Rojo'],['g','#3DBE5C','Verde'],['b','#3D7BE8','Azul']].map(([k,c,n])=>`<button class="led-btn" data-k="${k}" aria-pressed="false" aria-label="${n}" style="background:${c}"></button>`).join('')}</div>
+  <div class="led-name" id="ledName">Apagado</div></div></div>
+  <div class="mix">${[['#E8473A','Rojo'],['#3DBE5C','Verde'],['#3D7BE8','Azul'],['#F5D33B','Rojo + verde = amarillo'],['#E84AD8','Rojo + azul = magenta'],['#3CD8E0','Verde + azul = cian'],['#FFFFFF','Los tres = blanco']].map(([c,t])=>`<div><i style="background:${c}"></i>${t}</div>`).join('')}</div></div>`;
+ if(k==='bell')return `<div class="sim"><h3>Escucha el sonido</h3><p class="muted">Así de suave debe sonar el timbre. Si el niño se incomoda con este volumen, bájalo más.</p>
+  <div class="sim-row"><button class="bell" id="bellBtn">Timbre</button><label class="vol" for="vol">Volumen <input id="vol" type="range" min="0" max="1" step="0.05" value="0.35"></label></div></div>`;
+ if(k==='keys')return `<div class="sim"><h3>Practica una secuencia</h3><p class="muted">Toca las notas para modelar la actividad: <b>Do–Re–Mi</b>, luego <b>Mi–Re–Do</b>.</p>
+  <div class="keys" id="keys">${['Do','Re','Mi','Fa','Sol','La','Si','Do'].map((n,i)=>`<button class="key" data-i="${i}">${n}</button>`).join('')}</div>
+  <label class="vol" for="vol">Volumen <input id="vol" type="range" min="0" max="1" step="0.05" value="0.35"></label></div>`;
+ return '';
+}
+function renderDetail(){
+ const st=ST.find(s=>s.n===cur), i=ST.indexOf(st);
+ $('#detail').innerHTML=`<div class="d-head"><div class="d-badge">${iconSvg(st.icon)}</div>
+  <div class="d-title"><span class="eyebrow">Módulo ${st.n} de ${ST.length}</span><h2>${st.name}</h2><div class="chips">${st.skills.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+  <div class="d-nav"><button class="btn ghost small" id="prev" ${i===0?'disabled':''}>← Anterior</button><button class="btn ghost small" id="next" ${i===ST.length-1?'disabled':''}>Siguiente →</button>
+  <button class="btn small" id="mark" aria-pressed="${done.has(st.n)}">${done.has(st.n)?'✓ Trabajado':'Marcar trabajado'}</button></div></div>
+  <div class="d-body">
+   <div class="cols">
+    <div class="block"><h3>Cómo se usa</h3>${stepsHtml(st.steps)}</div>
+    <div class="block"><span class="eyebrow">Del instructivo</span>${st.orig.map(t=>`<p class="quote">${t}</p>`).join('')}
+     ${st.note?`<div class="note"><span class="i">!</span><p>${st.note}</p></div>`:''}${st.sim?simHtml(st.sim):''}</div>
+   </div>
+   <div class="do-dont">
+    <div class="lane ok"><h3><span class="mk">✓</span>Lo que el niño puede hacer</h3><div class="cards">${cards(st.ok,'ok')}</div></div>
+    <div class="lane bad"><h3><span class="mk">✕</span>Lo que hay que evitar</h3><div class="cards">${cards(st.no,'bad')}</div></div>
+   </div>
+  </div>`;
+ $('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
+ $('#mark').onclick=()=>{done.has(cur)?done.delete(cur):done.add(cur);store.set('pm-done',[...done]);renderBoard();renderDetail()};
+ bindSim(st.sim);
+}
+function go(n,scroll){cur=n;try{history.replaceState(null,'','#modulo-'+n)}catch(e){location.hash='modulo-'+n}renderBoard();renderDetail();if(scroll)$('#detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
+
+/* ---------- Audio y simuladores ---------- */
+let AC=null;const ac=()=>{if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C()}return AC};
+const vol=()=>{const v=$('#vol');return v?+v.value:0.35};
+function tone(f,t0,d,type='sine',g=.25){const a=ac();if(!a)return;const o=a.createOscillator(),gn=a.createGain();o.type=type;o.frequency.value=f;gn.gain.setValueAtTime(0,a.currentTime+t0);gn.gain.linearRampToValueAtTime(g*vol(),a.currentTime+t0+.02);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+t0+d);o.connect(gn).connect(a.destination);o.start(a.currentTime+t0);o.stop(a.currentTime+t0+d+.05)}
+function bindSim(k){
+ if(k==='led'){const on={r:0,g:0,b:0};const names={'000':'Apagado','100':'Rojo','010':'Verde','001':'Azul','110':'Amarillo','101':'Magenta','011':'Cian','111':'Blanco'};
+  const upd=()=>{const key=`${on.r}${on.g}${on.b}`;const col=`rgb(${on.r?255:0},${on.g?230:0},${on.b?255:0})`;const o=$('#ledOut');
+   o.style.background=key==='000'?'#2a2f33':col;o.style.boxShadow=key==='000'?'none':`0 0 40px 8px ${col}`;$('#ledName').textContent=names[key]};
+  document.querySelectorAll('.led-btn').forEach(b=>b.onclick=()=>{on[b.dataset.k]^=1;b.setAttribute('aria-pressed',!!on[b.dataset.k]);upd()});upd()}
+ if(k==='bell'){$('#bellBtn').onclick=()=>{const b=$('#bellBtn');b.classList.add('on');setTimeout(()=>b.classList.remove('on'),150);tone(880,0,.7);tone(698,.35,.9)}}
+ if(k==='keys'){const fr=[261.6,293.7,329.6,349.2,392,440,493.9,523.3];document.querySelectorAll('.key').forEach(b=>{b.onclick=()=>{b.classList.add('on');setTimeout(()=>b.classList.remove('on'),220);tone(fr[+b.dataset.i],0,.45,'triangle',.3)}})}
+}
+
+/* ---------- Generales y checklist ---------- */
+$('#general').innerHTML=GENERAL.map(g=>`<div class="g-card">${scene({...g,alt:g.h},g.k)}<h3 style="font-size:1.05rem;color:var(--${g.k})">${g.h}</h3><p>${g.p}</p></div>`).join('');
+function renderChecks(){
+ $('#checks').innerHTML=CHECKS.map((c,i)=>`<li><label for="chk${i}"><input type="checkbox" id="chk${i}" data-i="${i}" ${checks.has(i)?'checked':''}><span>${c}</span></label></li>`).join('');
+ document.querySelectorAll('#checks input').forEach(x=>x.onchange=()=>{x.checked?checks.add(+x.dataset.i):checks.delete(+x.dataset.i);store.set('pm-checks',[...checks]);status()});status()}
+function status(){const s=$('#chkStatus'),n=checks.size;s.textContent=n===CHECKS.length?'✓ Listo para empezar':`${n} de ${CHECKS.length} revisados`;s.style.color=n===CHECKS.length?'var(--ok)':'var(--warn)'}
+$('#chkReset').onclick=()=>{checks.clear();store.set('pm-checks',[]);renderChecks()};
+$('#resetSess').onclick=()=>{done.clear();store.set('pm-done',[]);renderBoard();renderDetail()};
+
+const fromHash=()=>{const m=location.hash.match(/^#modulo-(\d+)$/);if(m&&+m[1]>=1&&+m[1]<=ST.length)cur=+m[1]};
+fromHash();window.addEventListener('hashchange',()=>{fromHash();renderBoard();renderDetail()});
+renderBoard();renderDetail();renderChecks();
+</script>
+
+<div class="install" id="install" hidden>
+  <span id="installMsg">Instala la guía en este dispositivo para usarla sin internet.</span>
+  <span style="display:flex;gap:6px;align-items:center"><button class="btn small" id="installBtn">Instalar app</button><button class="x" id="installClose" aria-label="Cerrar">×</button></span>
+</div>
+<script>
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+(function(){
+ const bar=document.getElementById('install'),btn=document.getElementById('installBtn'),msg=document.getElementById('installMsg');
+ const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+ let dismissed=false;try{dismissed=localStorage.getItem('pm-install-x')==='1'}catch(e){}
+ let ev=null;
+ addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;if(!standalone&&!dismissed)bar.hidden=false});
+ btn.onclick=async()=>{if(!ev)return;ev.prompt();await ev.userChoice;ev=null;bar.hidden=true};
+ document.getElementById('installClose').onclick=()=>{bar.hidden=true;try{localStorage.setItem('pm-install-x','1')}catch(e){}};
+ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ if(ios&&!standalone&&!dismissed){msg.textContent='Para instalarla: toca Compartir y luego "Agregar a pantalla de inicio".';btn.hidden=true;bar.hidden=false}
+ addEventListener('appinstalled',()=>{bar.hidden=true});
+})();
+</script>
+</body>
+</html>

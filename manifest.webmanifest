@@ -1,0 +1,19 @@
+{
+  "name": "Panel Modular de Terapia Ocupacional",
+  "short_name": "Panel TO",
+  "description": "Guía del operador: instrucciones de cada módulo, qué puede hacer el niño y qué evitar por su seguridad.",
+  "lang": "es",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F1F4EF",
+  "theme_color": "#1F7A6B",
+  "categories": ["education", "medical", "health"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
