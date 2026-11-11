@@ -1,5 +1,5 @@
 // Cambia la versión cada vez que actualices la app para que los dispositivos descarguen los archivos nuevos.
-const VERSION = 'panel-to-v1';
+const VERSION = 'panel-to-v2';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest',
   'fonts/fonts.css', 'fonts/AtkinsonHyperlegible-normal-400.woff2', 'fonts/AtkinsonHyperlegible-normal-700.woff2',
