@@ -171,6 +171,119 @@ ol.steps b{display:block}
 .status{font-weight:700}
 footer{font-size:.85rem;color:var(--muted);max-width:70ch}
 
+/* ---- Registro y progreso ---- */
+:root{--h0:#ECEFEC;--h1:#C6E3DC;--h2:#8CC7B9;--h3:#3F9C8A;--h4:#17695B;--h-ink-lo:#1E3640;--h-ink-hi:#FFFFFF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--h0:#253634;--h1:#24504A;--h2:#2D7769;--h3:#4FAE9B;--h4:#94DCCB;--h-ink-lo:#E4EDE9;--h-ink-hi:#0C1A17}}
+:root[data-theme="dark"]{--h0:#253634;--h1:#24504A;--h2:#2D7769;--h3:#4FAE9B;--h4:#94DCCB;--h-ink-lo:#E4EDE9;--h-ink-hi:#0C1A17}
+.view{display:flex;flex-direction:column;gap:40px}
+.mono{font-variant-numeric:tabular-nums}
+.small{font-size:.88rem}
+.tabs{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:5px;width:max-content;max-width:100%;overflow-x:auto;margin-top:-16px}
+.tabs a{padding:9px 16px;border-radius:10px;text-decoration:none;color:var(--muted);font-family:var(--f-display);font-weight:600;white-space:nowrap}
+.tabs a[aria-current="true"]{background:var(--accent);color:var(--accent-ink)}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+label.btn{cursor:pointer;display:inline-flex;align-items:center}
+.btn.danger{color:var(--bad);border-color:var(--bad-soft)}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tag{font-family:var(--f-body);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:var(--warn-soft);color:var(--warn);vertical-align:middle}
+.log-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.pcard h3{font-size:1.15rem}
+.pmeta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0}
+.pmeta div{background:var(--scene);border-radius:10px;padding:8px 10px}
+.pmeta dt{font-size:.75rem;color:var(--muted)}
+.pmeta dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.pact{display:flex;gap:8px;flex-wrap:wrap}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.backup{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+.backup h3{font-size:1.05rem}
+.crumb a{color:var(--accent);font-weight:700;text-decoration:none}
+.report{display:flex;flex-direction:column;gap:22px}
+.r-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:2px}
+.stat span{font-size:.82rem;color:var(--muted)}
+.stat b{font-family:var(--f-display);font-size:1.9rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat em{font-style:normal;font-size:1rem;color:var(--muted);font-family:var(--f-body);font-weight:400}
+.stat small{font-size:.82rem;color:var(--muted)}
+.up{color:var(--ok);font-weight:700}.down{color:var(--bad);font-weight:700}
+.panel-s{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.chart-wrap{position:relative;overflow-x:auto}
+.chart{width:100%;min-width:480px;height:auto;display:block}
+.chart .ax{font-size:12px;fill:var(--muted);font-family:var(--f-body)}
+.chart .val{font-size:14px;font-weight:700;fill:var(--ink);font-family:var(--f-body)}
+.chart .hit{cursor:pointer}
+.tip{position:absolute;transform:translate(-50%,-100%);background:var(--ink);color:var(--bg);font-size:.82rem;padding:7px 10px;border-radius:8px;pointer-events:none;white-space:nowrap;line-height:1.4}
+.heat-wrap{overflow-x:auto}
+.heat{border-collapse:separate;border-spacing:3px;font-size:.88rem}
+.heat th{font-weight:400;color:var(--muted);text-align:center;padding:2px 4px;white-space:nowrap;font-size:.8rem}
+.heat tbody th{text-align:left;color:var(--ink);font-size:.88rem;padding-right:10px}
+.heat td{text-align:center;padding:0}
+.heat .nil{color:var(--muted)}
+.cell{display:grid;place-items:center;width:40px;height:30px;border-radius:6px;font-weight:700;font-variant-numeric:tabular-nums}
+.lv0{background:var(--h0);color:var(--h-ink-lo)}.lv1{background:var(--h1);color:var(--h-ink-lo)}.lv2{background:var(--h2);color:var(--h-ink-lo)}.lv3{background:var(--h3);color:var(--h-ink-hi)}.lv4{background:var(--h4);color:var(--h-ink-hi)}
+.dif{padding-left:8px!important;white-space:nowrap}
+.scale{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;color:var(--muted)}
+.scale span{display:flex;align-items:center;gap:6px}
+i.sw{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;font-style:normal;font-weight:700;font-size:.78rem;flex:none}
+.slist{display:flex;flex-direction:column;gap:8px}
+.sess{border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.sess summary{cursor:pointer}
+.sess[open]{display:flex;flex-direction:column;gap:10px}
+.stbl{border-collapse:collapse;font-size:.88rem;width:100%;min-width:560px}
+.stbl th{text-align:left;font-weight:700;color:var(--muted);font-size:.8rem;border-bottom:1px solid var(--line);padding:6px 8px}
+.stbl td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}
+.stbl td i.sw{margin-right:4px}
+.num{font-variant-numeric:tabular-nums}
+.snote{font-size:.92rem}
+.danger-zone{display:flex;justify-content:flex-end}
+.print-only{display:none}
+dialog{border:0;border-radius:18px;padding:0;background:var(--surface);color:var(--ink);width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
+dialog::backdrop{background:rgba(10,20,20,.5)}
+.dlg{display:flex;flex-direction:column;gap:16px;padding:20px}
+.dlg-head{display:flex;flex-direction:column;gap:4px}
+.dlg fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dlg legend{font-weight:700;margin-bottom:8px}
+.lv{display:flex;flex-direction:column;gap:6px}
+.lv-opt{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;padding:9px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.lv-opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.lv-opt input{margin-top:4px;accent-color:var(--accent);width:18px;height:18px}
+.lv-opt b{display:flex;align-items:center;gap:8px}
+.lv-opt small{display:block;color:var(--muted);font-size:.85rem;margin-left:30px}
+.chips-in{display:flex;flex-wrap:wrap;gap:8px}
+.chips-in label{cursor:pointer}
+.chips-in input{position:absolute;opacity:0;pointer-events:none}
+.chips-in span{display:inline-block;padding:7px 14px;border-radius:999px;border:1px solid var(--line)}
+.chips-in input:checked+span{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chips-in input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.fld{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
+.fld input,.fld textarea{font:inherit;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+.fld textarea{resize:vertical}
+.err{color:var(--bad);font-weight:700;font-size:.9rem}
+.dlg-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;position:sticky;bottom:0;background:var(--surface);padding-top:8px}
+.sum{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sum li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.92rem}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:700;max-width:calc(100vw - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+@media (max-width:900px){.stats{grid-template-columns:1fr 1fr}}
+@media print{
+  @page{margin:14mm}
+  :root,:root:not([data-theme="light"]),:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--ink:#111;--muted:#555;--line:#ccc;--accent:#1F7A6B;--ok:#2C8549;--bad:#BF3E2C;--warn:#A66A00;--warn-soft:#FFF1D6;--h0:#ECEFEC;--h1:#C6E3DC;--h2:#8CC7B9;--h3:#3F9C8A;--h4:#17695B;--h-ink-lo:#1E3640;--h-ink-hi:#FFFFFF;color-scheme:light}
+  body{background:#fff;padding:0}
+  .top,.tabs,#viewGuide,.no-print,.install,.toast,dialog,footer{display:none!important}
+  .print-only{display:block}
+  .wrap{padding:0;gap:0}
+  .report{gap:14px}
+  .panel-s,.stat{break-inside:avoid;border-color:#ccc}
+  .chart{min-width:0}
+  .sess{break-inside:avoid}
+  .sess summary{list-style:none}
+  .lv0,.lv1,.lv2,.lv3,.lv4{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sign{display:flex;justify-content:space-between;margin-top:36px;font-size:.95rem}
+}
+
 @media (max-width:900px){
   .top,.cols,.do-dont{grid-template-columns:1fr}
   .board-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -202,15 +315,13 @@ footer{font-size:.85rem;color:var(--muted);max-width:70ch}
         <span class="pill bad">✕ Evitar / detener</span>
       </div>
     </div>
-    <div class="session" aria-live="polite">
-      <div class="row"><strong>Sesión actual</strong><span id="sessCount" class="muted"></span></div>
-      <div class="bar"><span id="sessBar"></span></div>
-      <div class="row">
-        <span class="muted" style="font-size:.9rem">Marca cada módulo cuando el niño lo trabaje.</span>
-        <button class="btn ghost small" id="resetSess">Nueva sesión</button>
-      </div>
-    </div>
+    <div class="session" id="sessBox" aria-live="polite"></div>
   </header>
+  <nav class="tabs no-print" aria-label="Secciones">
+    <a href="#modulo-1" id="tabGuide" aria-current="true">Guía del panel</a>
+    <a href="#registro" id="tabLog" aria-current="false">Registro y progreso</a>
+  </nav>
+  <main id="viewGuide" class="view">
 
   <section class="board" aria-label="Módulos del panel">
     <div class="board-grid" id="board"></div>
@@ -249,8 +360,13 @@ footer{font-size:.85rem;color:var(--muted);max-width:70ch}
     <ul id="checks"></ul>
   </section>
 
-  <footer>Esta guía apoya al operador y no sustituye el criterio del terapeuta ocupacional a cargo. Ajusta cada actividad a la edad, el diagnóstico y el plan de intervención del niño. Las marcas de sesión y de revisión se guardan solo en este navegador.</footer>
+  </main>
+  <main id="viewLog" class="view" hidden></main>
+
+  <footer class="no-print">Esta guía apoya al operador y no sustituye el criterio del terapeuta ocupacional a cargo. Ajusta cada actividad a la edad, el diagnóstico y el plan de intervención del niño. Los registros de pacientes y la revisión previa se guardan solo en este dispositivo.</footer>
 </div>
+<dialog id="dlg" aria-label="Formulario"></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 /* ---------- Iconos de los objetos (caja 60x60) ---------- */
@@ -463,7 +579,6 @@ const CHECKS=['El panel está fijo y no se tambalea.','Botones, tapa, pieza del 
 
 /* ---------- Estado local (solo este navegador) ---------- */
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let done=new Set(store.get('pm-done',[]));
 let checks=new Set(store.get('pm-checks',[]));
 let cur=1;
 
@@ -472,9 +587,8 @@ const $=s=>document.querySelector(s);
 const iconSvg=(o)=>`<svg viewBox="0 0 60 60" aria-hidden="true">${ICON[o]}</svg>`;
 function renderBoard(){
  $('#board').innerHTML=ST.map(st=>`<button class="tile${st.wide?' wide':''}" data-n="${st.n}" aria-current="${st.n===cur}" style="background:var(--paper)">
-  <span class="num">${st.n}</span>${done.has(st.n)?'<span class="done" aria-label="trabajado">✓</span>':''}${iconSvg(st.icon)}<span class="nm">${st.name}</span></button>`).join('');
+  <span class="num">${st.n}</span>${isDone(st.n)?'<span class="done" aria-label="registrado">✓</span>':''}${iconSvg(st.icon)}<span class="nm">${st.name}</span></button>`).join('');
  $('#board').querySelectorAll('.tile').forEach(b=>b.onclick=()=>go(+b.dataset.n,true));
- const c=done.size; $('#sessCount').textContent=`${c} de ${ST.length} módulos trabajados`; $('#sessBar').style.width=(c/ST.length*100)+'%';
 }
 function cards(list,kind){return list.map(x=>`<div class="card">${scene({...x,alt:x.h},kind)}<div><h4>${x.h}</h4><p>${x.p}</p></div></div>`).join('')}
 function stepsHtml(steps){let out='',open=false;for(const s of steps){if(!Array.isArray(s)){if(open)out+='</ol>';out+=`<div class="sub">${s.sub}</div><ol class="steps">`;open=true}else{if(!open){out+='<ol class="steps">';open=true}out+=`<li><div><b>${s[0]}</b>${s[1]}</div></li>`}}return out+'</ol>'}
@@ -496,7 +610,7 @@ function renderDetail(){
  $('#detail').innerHTML=`<div class="d-head"><div class="d-badge">${iconSvg(st.icon)}</div>
   <div class="d-title"><span class="eyebrow">Módulo ${st.n} de ${ST.length}</span><h2>${st.name}</h2><div class="chips">${st.skills.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
   <div class="d-nav"><button class="btn ghost small" id="prev" ${i===0?'disabled':''}>← Anterior</button><button class="btn ghost small" id="next" ${i===ST.length-1?'disabled':''}>Siguiente →</button>
-  <button class="btn small" id="mark" aria-pressed="${done.has(st.n)}">${done.has(st.n)?'✓ Trabajado':'Marcar trabajado'}</button></div></div>
+  ${logControlsHtml(st.n)}</div></div>
   <div class="d-body">
    <div class="cols">
     <div class="block"><h3>Cómo se usa</h3>${stepsHtml(st.steps)}</div>
@@ -509,7 +623,7 @@ function renderDetail(){
    </div>
   </div>`;
  $('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
- $('#mark').onclick=()=>{done.has(cur)?done.delete(cur):done.add(cur);store.set('pm-done',[...done]);renderBoard();renderDetail()};
+ bindLogControls(st.n);
  bindSim(st.sim);
 }
 function go(n,scroll){cur=n;try{history.replaceState(null,'','#modulo-'+n)}catch(e){location.hash='modulo-'+n}renderBoard();renderDetail();if(scroll)$('#detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
@@ -534,11 +648,255 @@ function renderChecks(){
  document.querySelectorAll('#checks input').forEach(x=>x.onchange=()=>{x.checked?checks.add(+x.dataset.i):checks.delete(+x.dataset.i);store.set('pm-checks',[...checks]);status()});status()}
 function status(){const s=$('#chkStatus'),n=checks.size;s.textContent=n===CHECKS.length?'✓ Listo para empezar':`${n} de ${CHECKS.length} revisados`;s.style.color=n===CHECKS.length?'var(--ok)':'var(--warn)'}
 $('#chkReset').onclick=()=>{checks.clear();store.set('pm-checks',[]);renderChecks()};
-$('#resetSess').onclick=()=>{done.clear();store.set('pm-done',[]);renderBoard();renderDetail()};
 
 const fromHash=()=>{const m=location.hash.match(/^#modulo-(\d+)$/);if(m&&+m[1]>=1&&+m[1]<=ST.length)cur=+m[1]};
-fromHash();window.addEventListener('hashchange',()=>{fromHash();renderBoard();renderDetail()});
-renderBoard();renderDetail();renderChecks();
+/* ================= Registro de sesiones y progreso ================= */
+const LEVELS=[
+ {v:4,t:'Independiente',s:'Independiente',d:'Lo hace solo, sin ayuda.'},
+ {v:3,t:'Supervisión o indicación verbal',s:'Supervisión',d:'Solo necesita que le digas o le muestres.'},
+ {v:2,t:'Ayuda física parcial',s:'Ayuda parcial',d:'Le guías la mano en una parte de la tarea.'},
+ {v:1,t:'Ayuda física total',s:'Ayuda total',d:'Hacen la tarea juntos, mano sobre mano.'},
+ {v:0,t:'No la realizó',s:'No realizó',d:'Rechazó o no logró iniciar la actividad.'}];
+const lvl=v=>LEVELS.find(l=>l.v===v);
+const RESP=[{v:'agrado',t:'Disfrutó'},{v:'neutral',t:'Neutral'},{v:'incomodo',t:'Incomodidad'},{v:'rechazo',t:'Rechazo'}];
+const respT=v=>(RESP.find(r=>r.v===v)||{t:'—'}).t;
+const DB_KEY='pm-registro-v1';
+let storageOk=true;try{localStorage.setItem('pm-test','1');localStorage.removeItem('pm-test')}catch(e){storageOk=false}
+let DB=store.get(DB_KEY,null)||{patients:[],sessions:[],active:null};
+if(!Array.isArray(DB.patients))DB={patients:[],sessions:[],active:null};
+const save=()=>store.set(DB_KEY,DB);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtD=t=>new Date(t).toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});
+const fmtShort=t=>new Date(t).toLocaleDateString('es-MX',{day:'numeric',month:'short'});
+const mmss=ms=>{const s=Math.max(0,Math.floor(ms/1000));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const patient=id=>DB.patients.find(p=>p.id===id);
+const activeSession=()=>DB.sessions.find(s=>s.id===DB.active)||null;
+const sessionsOf=pid=>DB.sessions.filter(s=>s.pid===pid&&s.end).sort((a,b)=>a.start-b.start);
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const sessAvg=s=>avg(s.entries.map(e=>e.lvl));
+const sessMin=s=>s.entries.reduce((x,e)=>x+(+e.min||0),0);
+function age(b){if(!b)return '';const d=new Date(b+'T12:00:00'),n=new Date();let m=(n.getFullYear()-d.getFullYear())*12+n.getMonth()-d.getMonth();if(n.getDate()<d.getDate())m--;if(m<0||isNaN(m))return '';const y=Math.floor(m/12),r=m%12;return y?`${y} año${y>1?'s':''}${r?` ${r} mes${r>1?'es':''}`:''}`:`${r} mes${r!==1?'es':''}`}
+function isDone(n){const s=activeSession();return !!(s&&s.entries.some(e=>e.m===n))}
+
+/* ---------- Caja de sesión del encabezado ---------- */
+function renderSessionBox(){
+ const s=activeSession(),box=$('#sessBox');
+ if(!s){box.innerHTML=`<div class="row"><strong>Sin sesión en curso</strong></div><p class="muted" style="font-size:.9rem">Inicia una sesión para registrar cómo le fue al niño en cada módulo.</p><div class="row"><button class="btn small" id="sbStart">Iniciar sesión</button></div>`;$('#sbStart').onclick=()=>route('registro');return}
+ const p=patient(s.pid)||{name:'—'},c=new Set(s.entries.map(e=>e.m)).size;
+ box.innerHTML=`<div class="row"><strong>Sesión con ${esc(p.name)}</strong><span class="muted mono" id="sbClock">${mmss(Date.now()-s.start)}</span></div>
+  <div class="bar"><span style="width:${c/ST.length*100}%"></span></div>
+  <div class="row"><span class="muted" style="font-size:.9rem">${c} de ${ST.length} módulos registrados</span><button class="btn small" id="sbEnd">Terminar sesión</button></div>`;
+ $('#sbEnd').onclick=openEnd;
+}
+setInterval(()=>{const s=activeSession();const c=$('#sbClock');if(s&&c)c.textContent=mmss(Date.now()-s.start);const t=$('#timerTxt');if(t&&timer.m)t.textContent=mmss(Date.now()-timer.start)},1000);
+
+/* ---------- Controles en la ficha del módulo ---------- */
+let timer={m:null,start:0};
+function logControlsHtml(n){
+ const s=activeSession();
+ if(!s)return `<button class="btn small" id="logGo">Registrar en una sesión</button>`;
+ const e=s.entries.find(x=>x.m===n);
+ return `<button class="btn ghost small" id="timerBtn">${timer.m===n?'■ Detener <span class="mono" id="timerTxt">'+mmss(Date.now()-timer.start)+'</span>':'▶ Cronómetro'}</button>
+  <button class="btn small" id="logBtn">${e?'✓ Registrado · editar':'Registrar desempeño'}</button>`;
+}
+function bindLogControls(n){
+ const g=$('#logGo');if(g)g.onclick=()=>route('registro');
+ const t=$('#timerBtn');if(t)t.onclick=()=>{if(timer.m===n){const min=Math.max(.5,Math.round((Date.now()-timer.start)/30000)/2);timer={m:null,start:0};renderDetail();openEntry(n,min)}else{timer={m:n,start:Date.now()};renderDetail()}};
+ const b=$('#logBtn');if(b)b.onclick=()=>{let min=null;if(timer.m===n){min=Math.max(.5,Math.round((Date.now()-timer.start)/30000)/2);timer={m:null,start:0}}openEntry(n,min)};
+}
+
+/* ---------- Diálogo: registrar desempeño ---------- */
+function openEntry(n,minPre){
+ const s=activeSession();if(!s)return;const st=ST.find(x=>x.n===n);const e=s.entries.find(x=>x.m===n)||{};
+ const d=$('#dlg');
+ d.innerHTML=`<form method="dialog" id="entryForm" class="dlg">
+  <div class="dlg-head"><span class="eyebrow">Módulo ${n} · ${esc(st.name)}</span><h2>¿Cómo le fue?</h2></div>
+  <fieldset><legend>Nivel de ayuda que necesitó</legend><div class="lv">
+   ${LEVELS.map(l=>`<label class="lv-opt"><input type="radio" name="lvl" value="${l.v}" ${e.lvl===l.v?'checked':''} required><span><b><i class="sw lv${l.v}">${l.v}</i>${l.t}</b><small>${l.d}</small></span></label>`).join('')}
+  </div></fieldset>
+  <div class="frow"><label class="fld" for="fMin">Duración (minutos)<input id="fMin" type="number" min="0" max="180" step="0.5" value="${minPre??e.min??''}" placeholder="Ej. 5"></label></div>
+  <fieldset><legend>Respuesta del niño</legend><div class="chips-in">
+   ${RESP.map(r=>`<label><input type="radio" name="resp" value="${r.v}" ${e.resp===r.v?'checked':''}><span>${r.t}</span></label>`).join('')}
+  </div></fieldset>
+  <label class="fld" for="fNote">Observaciones<textarea id="fNote" rows="3" placeholder="Ej. Usó pinza con el botón grande; se frustró con el pequeño.">${esc(e.note||'')}</textarea></label>
+  <p class="err" id="fErr" hidden>Elige el nivel de ayuda para guardar.</p>
+  <div class="dlg-foot">${e.m?'<button type="button" class="btn ghost small danger" id="fDel">Borrar registro</button>':'<span></span>'}<span style="display:flex;gap:8px"><button type="button" class="btn ghost" id="fCancel">Cancelar</button><button type="submit" class="btn">Guardar</button></span></div>
+ </form>`;
+ d.showModal();
+ $('#fCancel').onclick=()=>d.close();
+ if($('#fDel'))$('#fDel').onclick=()=>{s.entries=s.entries.filter(x=>x.m!==n);save();d.close();refresh()};
+ $('#entryForm').onsubmit=ev=>{ev.preventDefault();const f=ev.target;const l=f.querySelector('input[name=lvl]:checked');if(!l){$('#fErr').hidden=false;return}
+  const r=f.querySelector('input[name=resp]:checked');const min=parseFloat($('#fMin').value);
+  const ne={m:n,lvl:+l.value,min:isNaN(min)?null:min,resp:r?r.value:null,note:$('#fNote').value.trim(),t:Date.now()};
+  s.entries=s.entries.filter(x=>x.m!==n).concat(ne).sort((a,b)=>a.t-b.t);save();d.close();refresh();toast('Registro guardado')};
+}
+
+/* ---------- Diálogo: terminar sesión ---------- */
+function openEnd(){
+ const s=activeSession();if(!s)return;const d=$('#dlg');const p=patient(s.pid);
+ d.innerHTML=`<form class="dlg" id="endForm"><div class="dlg-head"><span class="eyebrow">${esc(p?p.name:'')} · ${fmtD(s.start)}</span><h2>Terminar sesión</h2></div>
+  ${s.entries.length?`<ul class="sum">${s.entries.map(e=>`<li><i class="sw lv${e.lvl}">${e.lvl}</i><span>${esc(ST.find(x=>x.n===e.m).name)}</span><span class="muted">${lvl(e.lvl).s}${e.min!=null?' · '+e.min+' min':''}</span></li>`).join('')}</ul>`:'<p class="muted">Todavía no registras ningún módulo en esta sesión.</p>'}
+  <label class="fld" for="fSessNote">Notas generales de la sesión<textarea id="fSessNote" rows="3" placeholder="Estado de ánimo, cansancio, logros, qué trabajar la próxima vez.">${esc(s.note||'')}</textarea></label>
+  <div class="dlg-foot"><button type="button" class="btn ghost small danger" id="eDiscard">Descartar sesión</button><span style="display:flex;gap:8px"><button type="button" class="btn ghost" id="eBack">Seguir en sesión</button><button type="submit" class="btn" ${s.entries.length?'':'disabled'}>Guardar y terminar</button></span></div></form>`;
+ d.showModal();
+ $('#eBack').onclick=()=>{s.note=$('#fSessNote').value.trim();save();d.close()};
+ $('#eDiscard').onclick=()=>{if(!confirm('¿Descartar esta sesión? Se borrarán sus registros.'))return;DB.sessions=DB.sessions.filter(x=>x.id!==s.id);DB.active=null;timer={m:null,start:0};save();d.close();refresh()};
+ $('#endForm').onsubmit=ev=>{ev.preventDefault();s.note=$('#fSessNote').value.trim();s.end=Date.now();DB.active=null;timer={m:null,start:0};save();d.close();route('paciente-'+s.pid);toast('Sesión guardada')};
+}
+function startSession(pid){
+ if(activeSession()){toast('Ya hay una sesión en curso. Termínala primero.');return}
+ const s={id:uid(),pid,start:Date.now(),end:null,entries:[],note:''};DB.sessions.push(s);DB.active=s.id;save();
+ route('modulo-1');toast('Sesión iniciada. Abre cada módulo y registra el desempeño.');
+}
+
+/* ---------- Diálogo: paciente ---------- */
+function openPatient(id){
+ const p=id?patient(id):{};const d=$('#dlg');
+ d.innerHTML=`<form class="dlg" id="pForm"><div class="dlg-head"><span class="eyebrow">Paciente</span><h2>${id?'Editar datos':'Agregar paciente'}</h2></div>
+  <p class="muted" style="font-size:.9rem">Por privacidad, usa iniciales o un código en lugar del nombre completo.</p>
+  <label class="fld" for="pName">Nombre, iniciales o código<input id="pName" required maxlength="60" value="${esc(p.name||'')}" placeholder="Ej. J.M.R. o Paciente 07"></label>
+  <div class="frow"><label class="fld" for="pBirth">Fecha de nacimiento<input id="pBirth" type="date" value="${esc(p.birth||'')}"></label>
+  <label class="fld" for="pDx">Diagnóstico o motivo<input id="pDx" maxlength="120" value="${esc(p.dx||'')}" placeholder="Ej. TEA, retraso psicomotor"></label></div>
+  <label class="fld" for="pNotes">Objetivos o notas<textarea id="pNotes" rows="3" placeholder="Ej. Mejorar pinza fina y tolerancia táctil.">${esc(p.notes||'')}</textarea></label>
+  <div class="dlg-foot"><span></span><span style="display:flex;gap:8px"><button type="button" class="btn ghost" id="pCancel">Cancelar</button><button type="submit" class="btn">Guardar</button></span></div></form>`;
+ d.showModal();$('#pCancel').onclick=()=>d.close();
+ $('#pForm').onsubmit=ev=>{ev.preventDefault();const data={name:$('#pName').value.trim(),birth:$('#pBirth').value,dx:$('#pDx').value.trim(),notes:$('#pNotes').value.trim()};if(!data.name)return;
+  if(id)Object.assign(patient(id),data);else{const np={id:uid(),created:Date.now(),...data};DB.patients.push(np);id=np.id}
+  save();d.close();route('paciente-'+id)};
+}
+
+/* ---------- Vista: lista de pacientes ---------- */
+function renderLogList(){
+ const v=$('#viewLog');const act=activeSession();
+ const cards=DB.patients.map(p=>{const ss=sessionsOf(p.id);const last=ss[ss.length-1];const a=last?sessAvg(last):null;
+  return `<article class="pcard"><div><h3>${esc(p.name)}${p.demo?' <span class="tag">ejemplo</span>':''}</h3><p class="muted">${[age(p.birth),esc(p.dx)].filter(Boolean).join(' · ')||'Sin datos adicionales'}</p></div>
+  <dl class="pmeta"><div><dt>Sesiones</dt><dd>${ss.length}</dd></div><div><dt>Última</dt><dd>${last?fmtShort(last.start):'—'}</dd></div><div><dt>Independencia</dt><dd>${a!=null?a.toFixed(1)+' / 4':'—'}</dd></div></dl>
+  <div class="pact"><a class="btn ghost small" href="#paciente-${p.id}">Ver progreso</a>${act&&act.pid===p.id?'<a class="btn small" href="#modulo-1">Sesión en curso</a>':`<button class="btn small" data-start="${p.id}" ${act?'disabled title="Termina la sesión en curso primero"':''}>Iniciar sesión</button>`}</div></article>`}).join('');
+ v.innerHTML=`<section class="log-head"><div style="display:flex;flex-direction:column;gap:6px"><span class="eyebrow">Registro y progreso</span><h2>Pacientes</h2>
+  <p class="muted" style="max-width:62ch">Registra en cada sesión cuánta ayuda necesitó el niño en cada módulo. La app calcula su avance y genera un reporte para el expediente.</p></div>
+  <div class="row-btns"><button class="btn" id="addP">+ Agregar paciente</button></div></section>
+  ${storageOk?'':'<div class="note"><span class="i">!</span><p>Este navegador no permite guardar datos (modo incógnito o almacenamiento bloqueado). Los registros se perderán al cerrar.</p></div>'}
+  ${DB.patients.length?`<div class="pgrid">${cards}</div>`:`<div class="empty"><h3>Aún no hay pacientes</h3><p class="muted">Agrega al primer niño para empezar a registrar sesiones, o carga un paciente de ejemplo para ver cómo se ven las gráficas y el reporte.</p><div class="row-btns"><button class="btn" id="addP2">+ Agregar paciente</button><button class="btn ghost" id="demo">Cargar ejemplo</button></div></div>`}
+  <section class="backup"><div><h3>Respaldo de datos</h3><p class="muted">Los registros se guardan solo en este dispositivo. Descarga un respaldo cada semana o pásalo a otra tableta.</p></div>
+  <div class="row-btns"><button class="btn ghost small" id="bkOut">Descargar respaldo</button><label class="btn ghost small" for="bkIn">Cargar respaldo</label><input type="file" id="bkIn" accept="application/json,.json" hidden>${DB.patients.length&&!DB.patients.some(p=>p.demo)?'<button class="btn ghost small" id="demo">Cargar ejemplo</button>':''}</div></section>`;
+ [$('#addP'),$('#addP2')].forEach(b=>b&&(b.onclick=()=>openPatient()));
+ v.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>startSession(b.dataset.start));
+ const dm=$('#demo');if(dm)dm.onclick=loadDemo;
+ $('#bkOut').onclick=()=>download(`respaldo-panel-to-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(DB,null,1),'application/json');
+ $('#bkIn').onchange=ev=>{const f=ev.target.files[0];if(!f)return;f.text().then(t=>{let d;try{d=JSON.parse(t)}catch(e){toast('El archivo no es un respaldo válido.');return}
+  if(!d||!Array.isArray(d.patients)||!Array.isArray(d.sessions)){toast('El archivo no es un respaldo de esta app.');return}
+  let np=0,ns=0;d.patients.forEach(p=>{if(p&&p.id&&!patient(p.id)){DB.patients.push(p);np++}});d.sessions.forEach(s=>{if(s&&s.id&&s.end&&!DB.sessions.some(x=>x.id===s.id)){DB.sessions.push(s);ns++}});
+  save();renderLogList();toast(`Respaldo cargado: ${np} pacientes y ${ns} sesiones nuevas.`)})};
+}
+
+/* ---------- Vista: progreso del paciente ---------- */
+function lineChart(ss){
+ const W=680,H=260,L=118,R=24,T=20,B=40,pw=W-L-R,ph=H-T-B;
+ const pts=ss.map((s,i)=>({x:L+(ss.length===1?pw/2:i*pw/(ss.length-1)),y:T+ph-(sessAvg(s)/4)*ph,s,a:sessAvg(s)}));
+ const grid=[0,1,2,3,4].map(v=>{const y=T+ph-v/4*ph;return `<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${L-10}" y="${y+4}" text-anchor="end" class="ax">${lvl(v).s}</text>`}).join('');
+ const step=Math.ceil(ss.length/7);
+ const xl=pts.map((p,i)=>(i%step===0||i===pts.length-1)?`<text x="${p.x}" y="${H-12}" text-anchor="middle" class="ax">${fmtShort(p.s.start)}</text>`:'').join('');
+ const path=pts.map((p,i)=>(i?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
+ const area=pts.length>1?`<path d="${path} L${pts[pts.length-1].x} ${T+ph} L${pts[0].x} ${T+ph}Z" fill="var(--accent)" opacity=".1"/>`:'';
+ const last=pts[pts.length-1];
+ return `<div class="chart-wrap"><svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="Independencia promedio por sesión">${grid}${area}
+  <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  ${pts.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="${i===pts.length-1?6:4.5}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`).join('')}
+  <text x="${Math.min(last.x,W-R-4)}" y="${last.y-12}" text-anchor="${last.x>W-R-40?'end':'middle'}" class="val">${last.a.toFixed(1)}</text>
+  ${xl}${pts.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="16" fill="transparent" class="hit" data-i="${i}"/>`).join('')}</svg>
+  <div class="tip" id="tip" hidden></div></div>`;
+}
+function heatTable(ss){
+ const cols=ss.slice(-8);const mods=ST.filter(st=>cols.some(s=>s.entries.some(e=>e.m===st.n)));
+ return `<div class="heat-wrap"><table class="heat"><thead><tr><th scope="col">Módulo</th>${cols.map(s=>`<th scope="col">${fmtShort(s.start)}</th>`).join('')}<th scope="col">Cambio</th></tr></thead><tbody>
+ ${mods.map(st=>{const vals=cols.map(s=>{const e=s.entries.find(x=>x.m===st.n);return e?e.lvl:null});const got=vals.filter(v=>v!=null);const dif=got.length>1?got[got.length-1]-got[0]:null;
+  return `<tr><th scope="row">${st.n}. ${st.name}</th>${vals.map((v,i)=>v==null?'<td class="nil">–</td>':`<td><span class="cell lv${v}" title="${fmtShort(cols[i].start)} · ${lvl(v).t}">${v}</span></td>`).join('')}
+  <td class="dif">${dif==null?'<span class="muted">—</span>':dif>0?`<span class="up">▲ ${dif}</span>`:dif<0?`<span class="down">▼ ${-dif}</span>`:'<span class="muted">= 0</span>'}</td></tr>`}).join('')}
+ </tbody></table></div>
+ <div class="scale">${LEVELS.slice().reverse().map(l=>`<span><i class="sw lv${l.v}">${l.v}</i>${l.s}</span>`).join('')}</div>`;
+}
+function renderPatient(pid){
+ const p=patient(pid),v=$('#viewLog');if(!p){route('registro');return}
+ const ss=sessionsOf(pid),act=activeSession();
+ const first=ss[0],last=ss[ss.length-1];
+ const mins=ss.reduce((x,s)=>x+sessMin(s),0);const mods=new Set(ss.flatMap(s=>s.entries.map(e=>e.m))).size;
+ const delta=ss.length>1?sessAvg(last)-sessAvg(first):null;
+ v.innerHTML=`<div class="crumb no-print"><a href="#registro">← Pacientes</a></div>
+ <section id="report" class="report">
+  <div class="print-only"><span class="eyebrow">Panel Modular de Terapia Ocupacional</span><h1 style="font-size:1.6rem">Reporte de progreso</h1><p class="muted">Generado el ${fmtD(Date.now())}</p></div>
+  <header class="r-head"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="eyebrow no-print">Paciente</span><h2>${esc(p.name)}${p.demo?' <span class="tag">ejemplo</span>':''}</h2>
+   <p class="muted">${[age(p.birth)&&'Edad: '+age(p.birth),p.dx&&'Diagnóstico: '+esc(p.dx)].filter(Boolean).join(' · ')||'Sin datos adicionales'}</p>${p.notes?`<p><b>Objetivos:</b> ${esc(p.notes)}</p>`:''}</div>
+   <div class="row-btns no-print">${act&&act.pid===pid?'<a class="btn" href="#modulo-1">Ir a la sesión en curso</a>':`<button class="btn" id="pStart" ${act?'disabled title="Termina la sesión en curso primero"':''}>Iniciar sesión</button>`}
+    <button class="btn ghost small" id="pEdit">Editar</button><button class="btn ghost small" id="pCsv" ${ss.length?'':'disabled'}>Descargar Excel</button><button class="btn ghost small" id="pPrint" ${ss.length?'':'disabled'}>Imprimir o PDF</button></div></header>
+  ${ss.length?`
+  <div class="stats">
+   <div class="stat"><span>Sesiones</span><b>${ss.length}</b><small>${fmtShort(first.start)} – ${fmtShort(last.start)}</small></div>
+   <div class="stat"><span>Tiempo de trabajo</span><b>${Math.round(mins)}<em> min</em></b><small>en módulos registrados</small></div>
+   <div class="stat"><span>Módulos trabajados</span><b>${mods}<em> de ${ST.length}</em></b><small>al menos una vez</small></div>
+   <div class="stat"><span>Independencia (última)</span><b>${sessAvg(last).toFixed(1)}<em> / 4</em></b><small>${delta==null?'primera sesión':delta>0.05?`<span class="up">▲ ${delta.toFixed(1)} desde la primera</span>`:delta<-0.05?`<span class="down">▼ ${(-delta).toFixed(1)} desde la primera</span>`:'sin cambio desde la primera'}</small></div>
+  </div>
+  <section class="panel-s"><h3>Independencia promedio por sesión</h3><p class="muted small">0 = no realizó · 4 = independiente. Promedio de los módulos registrados en cada sesión.</p>${lineChart(ss)}</section>
+  <section class="panel-s"><h3>Nivel por módulo</h3><p class="muted small">Últimas ${Math.min(8,ss.length)} sesiones. "Cambio" compara la primera y la última vez que trabajó el módulo en este periodo.</p>${heatTable(ss)}</section>
+  <section class="panel-s"><h3>Sesiones</h3><div class="slist">${ss.slice().reverse().map(s=>`<details class="sess"><summary><span><b>${fmtD(s.start)}</b> <span class="muted">· ${s.entries.length} módulos · ${Math.round(sessMin(s))} min · promedio ${sessAvg(s).toFixed(1)}</span></span></summary>
+   <div class="heat-wrap"><table class="stbl"><thead><tr><th>Módulo</th><th>Nivel de ayuda</th><th>Min</th><th>Respuesta</th><th>Observaciones</th></tr></thead><tbody>
+   ${s.entries.map(e=>`<tr><td>${e.m}. ${ST.find(x=>x.n===e.m).name}</td><td><i class="sw lv${e.lvl}">${e.lvl}</i> ${lvl(e.lvl).t}</td><td class="num">${e.min??'—'}</td><td>${respT(e.resp)}</td><td>${esc(e.note)||'<span class="muted">—</span>'}</td></tr>`).join('')}</tbody></table></div>
+   ${s.note?`<p class="snote"><b>Notas:</b> ${esc(s.note)}</p>`:''}<div class="no-print" style="display:flex;justify-content:flex-end"><button class="btn ghost small danger" data-del="${s.id}">Borrar sesión</button></div></details>`).join('')}</div></section>`
+  :`<div class="empty"><h3>Sin sesiones todavía</h3><p class="muted">Toca "Iniciar sesión", abre cada módulo que trabaje el niño y registra cuánta ayuda necesitó. Al terminar, aquí verás su avance.</p></div>`}
+  <div class="print-only sign"><div>Terapeuta: ____________________________</div><div>Firma: ____________________</div></div>
+ </section>
+ <div class="no-print danger-zone"><button class="btn ghost small danger" id="pDel">Eliminar paciente y su historial</button></div>`;
+ const st=$('#pStart');if(st)st.onclick=()=>startSession(pid);
+ $('#pEdit').onclick=()=>openPatient(pid);
+ $('#pCsv').onclick=()=>exportCsv(p,ss);
+ $('#pPrint').onclick=()=>{v.querySelectorAll('details.sess').forEach(d=>d.open=true);window.print()};
+ $('#pDel').onclick=()=>{if(!confirm(`¿Eliminar a ${p.name} y todas sus sesiones? No se puede deshacer.`))return;if(act&&act.pid===pid)DB.active=null;DB.patients=DB.patients.filter(x=>x.id!==pid);DB.sessions=DB.sessions.filter(x=>x.pid!==pid);save();route('registro')};
+ v.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(!confirm('¿Borrar esta sesión?'))return;DB.sessions=DB.sessions.filter(x=>x.id!==b.dataset.del);save();renderPatient(pid)});
+ const tip=$('#tip');
+ v.querySelectorAll('.hit').forEach(h=>{const show=()=>{const s=ss[+h.dataset.i];const svg=h.ownerSVGElement,r=svg.getBoundingClientRect(),k=r.width/680;
+  tip.innerHTML=`<b>${fmtD(s.start)}</b><br>Promedio: ${sessAvg(s).toFixed(1)} / 4<br>${s.entries.length} módulos · ${Math.round(sessMin(s))} min`;tip.hidden=false;
+  const x=+h.getAttribute('cx')*k,y=+h.getAttribute('cy')*k;tip.style.left=Math.min(Math.max(x,70),r.width-70)+'px';tip.style.top=(y-12)+'px'};
+  h.addEventListener('mouseenter',show);h.addEventListener('click',show);h.addEventListener('mouseleave',()=>tip.hidden=true)});
+}
+
+/* ---------- Exportar ---------- */
+function download(name,text,type){const b=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+function exportCsv(p,ss){
+ const q=v=>{v=String(v??'');return /[",\n;]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+ const rows=[['Paciente','Fecha','Sesión','Módulo','Nombre del módulo','Nivel (0-4)','Nivel de ayuda','Minutos','Respuesta','Observaciones','Notas de la sesión']];
+ ss.forEach((s,i)=>s.entries.forEach(e=>rows.push([p.name,new Date(s.start).toISOString().slice(0,10),i+1,e.m,ST.find(x=>x.n===e.m).name,e.lvl,lvl(e.lvl).t,e.min??'',respT(e.resp),e.note||'',s.note||''])));
+ download(`progreso-${p.name.replace(/[^\w-]+/g,'_')}.csv`,'﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n'),'text/csv;charset=utf-8');
+}
+
+/* ---------- Ejemplo de demostración ---------- */
+function loadDemo(){
+ if(DB.patients.some(p=>p.demo)){toast('El ejemplo ya está cargado.');return}
+ let seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+ const b=new Date();b.setFullYear(b.getFullYear()-5);b.setMonth(b.getMonth()-4);
+ const p={id:uid(),demo:true,created:Date.now(),name:'Paciente de ejemplo',birth:b.toISOString().slice(0,10),dx:'Datos ficticios para demostración',notes:'Mejorar pinza fina, coordinación bimanual y tolerancia táctil.'};
+ DB.patients.push(p);
+ const base={1:1,2:0,3:3,4:2,5:1,6:2,7:1,8:2,9:3,10:2,11:1};
+ for(let k=0;k<7;k++){const start=Date.now()-(6-k)*7*864e5-36e5;const mods=ST.map(s=>s.n).filter(()=>rnd()<.6);if(mods.length<4)mods.push(1,3,11);
+  const entries=[...new Set(mods)].map((m,j)=>{const l=Math.max(0,Math.min(4,Math.round(base[m]+k*0.38+(rnd()-.5))));return{m,lvl:l,min:Math.round((2+rnd()*6)*2)/2,resp:l>=3?'agrado':l>=2?(rnd()<.6?'agrado':'neutral'):l===1?'neutral':'incomodo',note:'',t:start+j*4e5}});
+  DB.sessions.push({id:uid(),pid:p.id,start,end:start+40*6e4,entries,note:k===0?'Primera sesión. Se mostró curioso con las luces; evitó las texturas.':k===6?'Mejor tolerancia a las texturas. Cierra el zipper con supervisión.':''})}
+ save();route('paciente-'+p.id);toast('Ejemplo cargado. Puedes borrarlo cuando quieras.');
+}
+
+/* ---------- Avisos y navegación ---------- */
+let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3200)}
+function route(h){if(location.hash==='#'+h)onRoute();else location.hash=h}
+function refresh(){renderSessionBox();renderBoard();if(!$('#viewGuide').hidden)renderDetail();else onRoute()}
+function onRoute(){
+ const h=location.hash.slice(1);const log=h==='registro'||h.startsWith('paciente-');
+ $('#viewGuide').hidden=log;$('#viewLog').hidden=!log;
+ $('#tabGuide').setAttribute('aria-current',!log);$('#tabLog').setAttribute('aria-current',log);
+ $('#tabGuide').href='#modulo-'+cur;
+ renderSessionBox();
+ if(log){h==='registro'?renderLogList():renderPatient(h.slice(9));window.scrollTo(0,0)}
+ else{fromHash();renderBoard();renderDetail()}
+}
+window.addEventListener('hashchange',onRoute);
+onRoute();renderChecks();
 </script>
 
 <div class="install" id="install" hidden>
